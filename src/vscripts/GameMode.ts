@@ -42,8 +42,8 @@ export class GameMode {
             });
 
             // Also apply the panic modifier to the sending player's hero
-            const hero = player.GetAssignedHero();
-            hero.AddNewModifier(hero, undefined, modifier_panic.name, { duration: 5 });
+            // const hero = player.GetAssignedHero();
+            // hero.AddNewModifier(hero, undefined, modifier_panic.name, { duration: 5 });
         });
     }
 
