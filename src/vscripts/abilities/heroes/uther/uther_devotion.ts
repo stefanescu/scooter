@@ -1,7 +1,7 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class meepo_earthbind_ts_example extends BaseAbility {
+export class uther_q extends BaseAbility {
     particle?: ParticleID;
 
     GetCooldown() {

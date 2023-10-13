@@ -53,6 +53,10 @@ export class GameMode {
 
         GameRules.SetShowcaseTime(0);
         GameRules.SetHeroSelectionTime(heroSelectionTime);
+        
+        //auto select hero here for quick testing
+        const Game = GameRules.GetGameModeEntity();
+        Game.SetCustomGameForceHero("npc_dota_hero_axe");
     }
 
     public OnStateChange(): void {
