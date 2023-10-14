@@ -1,7 +1,7 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class meepo_earthbind_ts_example extends BaseAbility {
+export class garrosh_armor_up extends BaseAbility {
     particle?: ParticleID;
 
     GetCooldown() {
@@ -16,6 +16,10 @@ export class meepo_earthbind_ts_example extends BaseAbility {
         return cooldown;
     }
 
+    IsPassive(): boolean {
+        return true;
+    }
+    
     OnAbilityPhaseStart() {
         if (IsServer()) {
             this.GetCaster().EmitSound("Hero_Meepo.Earthbind.Cast");
