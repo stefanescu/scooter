@@ -1,9 +1,11 @@
+import { GameMode } from "../../../GameMode";
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class meepo_earthbind_ts_example extends BaseAbility {
+export class garrosh_groundbreaker extends BaseAbility {
     particle?: ParticleID;
 
+    
     GetCooldown() {
         let cooldown = this.GetSpecialValueFor("cooldown");
         if (IsServer()) {
@@ -28,9 +30,10 @@ export class meepo_earthbind_ts_example extends BaseAbility {
         this.GetCaster().StopSound("Hero_Meepo.Earthbind.Cast");
     }
 
-    GetCastAnimation(): GameActivity {
-        return GameActivity.DOTA_CAST_ABILITY_3;
-    }
+    // GetCastAnimation(): GameActivity {
+    //     return GameActivity.DOTA_CAST_ABILITY_4;
+    // }
+    
 
     OnSpellStart() {
         const caster = this.GetCaster();
