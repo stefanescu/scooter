@@ -1,7 +1,7 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 
 @registerAbility()
-export class garrosh_bloodthrist extends BaseAbility {
+export class garrosh_bloodthirst extends BaseAbility {
     particle?: ParticleID;
 
     GetCooldown() {

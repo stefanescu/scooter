@@ -11,9 +11,9 @@
 		"override_hero"				"npc_dota_hero_axe"			// Hero to override
 		"Ability1"					"garrosh_groundbreaker"		// Ability 1
 		"Ability2"					"garrosh_bloodthirst"		// Ability 2
-		"Ability3"					"garrosh_wreckingball"		// Ability 3
+		"Ability3"					"garrosh_wrecking_ball"		// Ability 3
 		"Ability4"					"garrosh_decimate"		// Ability 4
 		"Ability5"					"garrosh_warlords_challange"		// Ability 5
-	
+		"Ability6"					"garrosh_armor_up" // Ability 6
 	}
 }

@@ -15,6 +15,71 @@
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "ability_lua"
         "ScriptFile"                    "abilities/heroes/garrosh/garrosh_groundbreaker.lua"
+        "AbilityTextureName"            "axe_culling_blade"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Meepo.Earthbind.Cast"
+
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "350"
+        "AbilityCastPoint"              "1.0"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "5"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "10"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "220"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "857"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "tooltip_range"         "1250"
+            }
+            // Adding cooldown and praying this gets synced
+            "05"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "cooldown"              "3"
+                "LinkedSpecialBonus"    "special_bonus_unique_meepo3"
+            }
+
+        }
+    }
+
+    //=================================================================================================================
+    // Garrosh: Bloodthirst
+    //=================================================================================================================
+    "garrosh_bloodthirst"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/garrosh/garrosh_bloodthirst.lua"
         "AbilityTextureName"            "meepo_earthbind"
         "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
         "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
@@ -69,6 +134,73 @@
             }
 
         }
-        "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_4"
+        "AbilityCastAnimation"      "ACT_GESTURE_MELEE_ATTACK2"
     }
+
+    //=================================================================================================================
+    // Garrosh: Wrecking ball
+    //=================================================================================================================
+    "garrosh_wrecking_ball"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/garrosh/garrosh_wrecking_ball.lua"
+        "AbilityTextureName"            "tiny_toss"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Meepo.Earthbind.Cast"
+
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "1250"
+        "AbilityCastPoint"              "0.3"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "1"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "10"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "220"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "857"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "tooltip_range"         "1250"
+            }
+            // Adding cooldown and praying this gets synced
+            "05"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "cooldown"              "2"
+                "LinkedSpecialBonus"    "special_bonus_unique_meepo3"
+            }
+
+        }
+        "AbilityCastAnimation"      "ACT_GESTURE_MELEE_ATTACK2"
+    }
+
 }

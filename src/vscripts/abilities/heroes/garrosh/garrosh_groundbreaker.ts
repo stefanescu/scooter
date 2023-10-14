@@ -30,10 +30,12 @@ export class garrosh_groundbreaker extends BaseAbility {
         this.GetCaster().StopSound("Hero_Meepo.Earthbind.Cast");
     }
 
-    // GetCastAnimation(): GameActivity {
-    //     return GameActivity.DOTA_CAST_ABILITY_4;
-    // }
-    
+    GetCastAnimation(): GameActivity {
+        return GameActivity.DOTA_CAST_ABILITY_4;
+    }
+    GetAbilityTextureName(): string {
+        return "axe_culling_blade";
+    }
 
     OnSpellStart() {
         const caster = this.GetCaster();
