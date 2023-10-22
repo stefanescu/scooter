@@ -1,4 +1,3 @@
-import { GameMode } from "../../../GameMode";
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 
 @registerAbility()
