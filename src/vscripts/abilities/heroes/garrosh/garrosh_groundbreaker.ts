@@ -36,6 +36,9 @@ export class garrosh_groundbreaker extends BaseAbility {
     GetAbilityTextureName(): string {
         return "axe_culling_blade";
     }
+    GetCastPoint(): number {
+        return 0.4;
+    }
 
     OnSpellStart() {
         const caster = this.GetCaster();
