@@ -32,9 +32,11 @@ export class garrosh_groundbreaker extends BaseAbility {
     GetCastAnimation(): GameActivity {
         return GameActivity.DOTA_CAST_ABILITY_4;
     }
+
     GetAbilityTextureName(): string {
         return "axe_culling_blade";
     }
+    
     GetCastPoint(): number {
         return 0.4;
     }
