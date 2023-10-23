@@ -3,6 +3,10 @@ import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 @registerAbility()
 export class garrosh_groundbreaker extends BaseAbility {
     particle?: ParticleID;
+    cast_anim: GameActivity = GameActivity.DOTA_CAST_ABILITY_4;
+    cast_sound: string = "Hero_Meepo.Earthbind.Cast";
+    texture_name: string = "axe_culling_blade";
+    cast_point: number = 0.4;
 
     
     GetCooldown() {
@@ -19,26 +23,26 @@ export class garrosh_groundbreaker extends BaseAbility {
 
     OnAbilityPhaseStart() {
         if (IsServer()) {
-            this.GetCaster().EmitSound("Hero_Meepo.Earthbind.Cast");
+            this.GetCaster().EmitSound(this.cast_sound);
         }
 
         return true;
     }
 
     OnAbilityPhaseInterrupted() {
-        this.GetCaster().StopSound("Hero_Meepo.Earthbind.Cast");
+        this.GetCaster().StopSound(this.cast_sound);
     }
 
     GetCastAnimation(): GameActivity {
-        return GameActivity.DOTA_CAST_ABILITY_4;
+        return this.cast_anim;
     }
 
     GetAbilityTextureName(): string {
-        return "axe_culling_blade";
+        return this.texture_name;
     }
     
     GetCastPoint(): number {
-        return 0.4;
+        return this.cast_point;
     }
 
     OnSpellStart() {
