@@ -16,4 +16,10 @@
 		"Ability5"					"garrosh_warlords_challange"		// Ability 5
 		"Ability6"					"garrosh_armor_up" // Ability 6
 	}
+
+	"npc_dota_hero_night_stalker_template"
+	{
+		"override_hero"				"npc_dota_hero_night_stalker"			// Hero to override
+		"Ability3"					"malganis_night_rush"		// Ability 1
+	}
 }

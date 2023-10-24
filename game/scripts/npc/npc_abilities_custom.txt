@@ -1,5 +1,6 @@
 #base "heroes/meepo.kv"
 #base "heroes/garrosh.kv"
+#base "heroes/malganis.kv"
 
 "DOTAAbilities"
 {
