@@ -4,7 +4,7 @@ import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 export class malganis_night_rush extends BaseAbility {
     particle?: ParticleID;
     caster = this.GetCaster();
-    cast_anim = GameActivity.DOTA_CAST_ABILITY_4;
+    cast_anim = GameActivity.DOTA_ATTACK;
     cast_sound = "Hero_NightStalker.Darkness";
     cast_point = 0.4;
 
