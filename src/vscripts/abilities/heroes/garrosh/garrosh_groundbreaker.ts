@@ -51,7 +51,7 @@ export class garrosh_groundbreaker extends BaseAbility {
         
         const units = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
-            this.caster.GetAbsOrigin(),
+            smashPos,
             undefined,
             radius,
             UnitTargetTeam.ENEMY,
