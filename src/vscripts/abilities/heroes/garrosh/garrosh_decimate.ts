@@ -57,7 +57,7 @@ export class garrosh_decimate extends BaseAbility {
                 damage: 300,
                 damage_type: DamageTypes.PHYSICAL})
 
-            //slow
+            //todo: slow
 
         }
         
