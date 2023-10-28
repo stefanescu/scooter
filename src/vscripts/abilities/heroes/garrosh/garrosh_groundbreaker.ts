@@ -10,7 +10,10 @@ export class garrosh_groundbreaker extends BaseAbility {
 
     
     GetCooldown() {
-        let cooldown = this.GetSpecialValueFor("cooldown");
+        //todo: test super.getcd()
+        // let cooldown = super.GetCooldown(this.GetLevel());
+        // print(cooldown);
+        let cooldown = super.GetSpecialValueFor("cooldown");
         if (IsServer()) {
             const talent = this.caster.FindAbilityByName("special_bonus_unique_meepo_3");
             if (talent) {
