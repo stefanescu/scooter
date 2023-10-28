@@ -1,4 +1,5 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
+import { modifier_decimate } from "../../../modifiers/garrosh/modifier_decimate"
 
 @registerAbility()
 export class garrosh_decimate extends BaseAbility {
@@ -43,7 +44,7 @@ export class garrosh_decimate extends BaseAbility {
             undefined,
             radius,
             UnitTargetTeam.ENEMY,
-            UnitTargetType.BASIC | UnitTargetType.HERO,
+            UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING,
             UnitTargetFlags.NONE,
             0,
             false
@@ -51,26 +52,17 @@ export class garrosh_decimate extends BaseAbility {
 
 
         for (const unit of units) { 
+
+            unit.AddNewModifier (this.caster, this, modifier_decimate.name, { duration: 2 });
+            
             ApplyDamage({
                 victim: unit,
                 attacker: this.caster,
-                damage: 300,
-                damage_type: DamageTypes.PHYSICAL})
-
-            //todo: slow
+                damage: 100,
+                damage_type: DamageTypes.PHYSICAL
+            })
 
         }
         
-
-        // this.particle = ParticleManager.CreateParticle(
-        //     "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf",
-        //     ParticleAttachment.CUSTOMORIGIN,
-        //     this.caster,
-        // );
-
-        // ParticleManager.SetParticleControl(this.particle, 0, this.caster.GetAbsOrigin());
-        // ParticleManager.SetParticleControl(this.particle, 1, point);
-        // ParticleManager.SetParticleControl(this.particle, 2, Vector(projectileSpeed, 0, 0));
-
     }
 }
