@@ -15,4 +15,5 @@
     "npc_dota_hero_warlock"	"1"
     "npc_dota_hero_witch_doctor" "1"
 	"npc_dota_hero_night_stalker" "1"
+	"npc_dota_hero_dark_seer" "1"
 }
