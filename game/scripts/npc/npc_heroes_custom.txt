@@ -28,4 +28,12 @@
 		"override_hero"				"npc_dota_hero_dark_seer"			// Hero to override
 		"Ability1"					"guldan_fel_flame"		// Ability 1
 	}
+
+	"npc_dota_hero_nazeebo_template"
+	{
+		"override_hero"				"npc_dota_hero_witch_doctor"			// Hero to override
+		"Ability1"					"nazeebo_corpse_spiders"		// Ability 1
+	}
+
+	
 }
