@@ -9,16 +9,16 @@
     //=================================================================================================================
     // Witch Doctor: Q
     //=================================================================================================================
-    "meepo_earthbind_ts_example"
+    "nazeebo_corpse_spiders"
     {
         // General
         //-------------------------------------------------------------------------------------------------------------
         "BaseClass"                     "ability_lua"
         "ScriptFile"                    "abilities/heroes/meepo/earthbind_ts_example.lua"
         "AbilityTextureName"            "meepo_earthbind"
-        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
-        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
-        "SpellDispellableType"          "SPELL_DISPELLABLE_YES"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_POINT | DOTA_ABILITY_BEHAVIOR_TARGET | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_YES"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_NO"
         "FightRecapLevel"               "1"
         "AbilitySound"                  "Hero_Meepo.Earthbind.Cast"
 
@@ -43,7 +43,7 @@
             "01"
             {
                 "var_type"              "FIELD_FLOAT"
-                "duration"              "2.0"
+                "duration"              "3.0"
             }
             "02"
             {
@@ -60,13 +60,7 @@
                 "var_type"              "FIELD_INTEGER"
                 "tooltip_range"         "1250"
             }
-            // Adding cooldown and praying this gets synced
-            "05"
-            {
-                "var_type"              "FIELD_FLOAT"
-                "cooldown"              "2"
-                "LinkedSpecialBonus"    "special_bonus_unique_meepo3"
-            }
+
 
         }
         "AbilityCastAnimation"      "ACT_DOTA_CAST_ABILITY_1"

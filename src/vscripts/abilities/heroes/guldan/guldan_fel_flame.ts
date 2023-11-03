@@ -4,15 +4,16 @@ import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 export class guldan_fel_flame extends BaseAbility {
     particle?: ParticleID;
     caster = this.GetCaster();
-    cast_anim = GameActivity.DOTA_CAST_ABILITY_4;
+    cast_anim = GameActivity.DOTA_CAST_ABILITY_1;
     cast_sound = "Hero_Meepo.Earthbind.Cast";
-    cast_point = 0.4;
-    hitParticle = "particles/units/heroes/hero_pangolier/pangolier_tailthump.vpcf";
+    cast_point = 0.3;
+
+    hitParticle = "particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf";
+
     damage = this.GetSpecialValueFor("damage");
     range = this.GetSpecialValueFor("range");
     speed = this.GetSpecialValueFor("speed");
-
-    
+    textureName = "lina_dragonslave"
 
     OnAbilityPhaseStart() {
         if (IsServer()) {
@@ -55,8 +56,8 @@ export class guldan_fel_flame extends BaseAbility {
             EffectName:  "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
             Ability: this,
             vSpawnOrigin : this.GetCaster().GetOrigin(), 
-            fStartRadius : 20,
-            fEndRadius : 80,
+            fStartRadius : 50,
+            fEndRadius : 100,
             vVelocity : ( direction * this.speed) as Vector,
             fDistance : this.range,
             Source : this.GetCaster(),
@@ -66,55 +67,18 @@ export class guldan_fel_flame extends BaseAbility {
 
         ProjectileManager.CreateLinearProjectile ( proj);
         EmitSoundOn( "Hero_Lina.DragonSlave", this.GetCaster() );
-        // const radius = this.GetSpecialValueFor("radius");
-
-        // const heroToPoint = (this.caster.GetForwardVector() * 400 ) as Vector;
-
-        // const smashPos = (this.caster.GetAbsOrigin() + heroToPoint) as Vector;
-        
-        // const particle = ParticleManager.CreateParticle(
-        //     this.hitParticle,
-        //     ParticleAttachment.WORLDORIGIN,
-        //     this.caster
-        // );
-
-        // ParticleManager.SetParticleControl(particle, 0, smashPos);
-        // ParticleManager.ReleaseParticleIndex
-        
-        // const units = FindUnitsInRadius(
-        //     this.caster.GetTeamNumber(),
-        //     smashPos,
-        //     undefined,
-        //     radius,
-        //     UnitTargetTeam.ENEMY,
-        //     UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING | UnitTargetType.CREEP,
-        //     UnitTargetFlags.NONE,
-        //     0,
-        //     false
-        //     );
-
-        // for (const unit of units) { 
-
-        //     unit.AddNewModifier (this.caster, this, BuiltInModifier.STUN , { duration: 2 });
-            
-        //     ApplyDamage({
-        //         victim: unit,
-        //         attacker: this.caster,
-        //         damage: 250,
-        //         damage_type: DamageTypes.PHYSICAL
-        //     })
-    
-        // }
-
     
     }
 
+    GetAbilityTextureName(): string {
+        return this.textureName;
+    }
     OnProjectileHit(target: CDOTA_BaseNPC | undefined, location: Vector): boolean | void {
         if (target && (!target.IsInvulnerable())) {
             let damage = {
                         victim: target,
                         attacker: this.caster,
-                        damage: 250,
+                        damage: this.damage,
                         damage_type: DamageTypes.PHYSICAL,
                         ability: this
                     };
@@ -125,7 +89,7 @@ export class guldan_fel_flame extends BaseAbility {
             vDirection.z = 0.0;
             vDirection = vDirection.Normalized();
 
-            let nFXIndex = ParticleManager.CreateParticle( "particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf", ParticleAttachment.ABSORIGIN_FOLLOW, target )
+            let nFXIndex = ParticleManager.CreateParticle( this.hitParticle, ParticleAttachment.ABSORIGIN_FOLLOW, target )
 		    ParticleManager.SetParticleControlForward( nFXIndex, 1, vDirection )
 		    ParticleManager.ReleaseParticleIndex( nFXIndex )
                
