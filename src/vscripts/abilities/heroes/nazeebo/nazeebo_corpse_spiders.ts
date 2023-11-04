@@ -118,25 +118,26 @@ export class nazeebo_corpse_spiders extends BaseAbility {
 
 
     OnProjectileHit(target: CDOTA_BaseNPC | undefined, location: Vector): boolean | void {
-            
-        for (let i = 0; i < 3; i++) {
+        const owner = this.caster.GetOwner();
+        const teamNumber = this.caster.GetTeamNumber();
+        
+        let nSpiders = 3 
+        for (let i = 0; i < nSpiders; i++) {
             const spider = CreateUnitByName("npc_dota_broodmother_spiderling",
                     location,
                     true,
                     this.caster,
-                    this.caster.GetOwner(),
-                    this.caster.GetTeamNumber()
-                    );
+                    owner,
+                    teamNumber);
+            
             if (spider != null) {
-                spider.SetControllableByPlayer(this.caster.GetPlayerOwnerID(), false);
-                spider.MoveToPositionAggressive(location);
                 spider.SetOwner(this.caster);
+                spider.SetControllableByPlayer(this.caster.GetPlayerOwnerID(), false);
                 
-                const kv = {
-                    duration: this.duration
-                };
-
-                spider.AddNewModifier(this.caster, this, modifier_spiderling_expire.name , kv);
+                spider.AddNewModifier(this.caster, this, 
+                    modifier_spiderling_expire.name, {duration: this.duration});
+                
+                spider.MoveToPositionAggressive(location); //todo: make spiders only attack units in aoe   
             }
         }
 
