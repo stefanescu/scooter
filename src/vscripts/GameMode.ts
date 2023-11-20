@@ -57,9 +57,9 @@ export class GameMode {
         //auto select hero here for quick testing
         const Game = GameRules.GetGameModeEntity();
         // Game.SetCustomGameForceHero("npc_dota_hero_axe");
-        // Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); 
+        Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); 
         // Game.SetCustomGameForceHero("npc_dota_hero_dark_seer"); 
-        Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); 
+        // Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); 
     }
 
     public OnStateChange(): void {
