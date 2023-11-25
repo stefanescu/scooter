@@ -2,7 +2,7 @@
 
 
 import { modifier_charges } from "../modifiers/generic/modifier_charges";
-import "../modifiers/general_mechanics/modifier_reimagined_no_outgoing_damage";
+// import "../modifiers/general_mechanics/modifier_reimagined_no_outgoing_damage";
 import { BaseAbility, BaseItem, BaseModifier } from "./dota_ts_adapter";
 import { BaseTalent } from "./talents";
 import { reloadable } from "./tstl-utils";
@@ -82,7 +82,7 @@ export function SpellReflect(event: ModifierAbilityEvent, parent: CDOTA_BaseNPC,
 	reflected_ability_handle!.OnSpellStart();
 
 	// Remove channeling effects
-	if (reflected_ability_handle!.OnChannelFinish!) {
+	if (reflected_ability_handle!.OnChannelFinish != null) {
 		reflected_ability_handle!.OnChannelFinish(false);
 	}
 
@@ -758,7 +758,7 @@ export function GetChargeModifierForAbility(ability: CDOTA_Ability_Lua): modifie
 
 export function GetAllChargesModifiersForUnit(caster: CDOTA_BaseNPC): modifier_charges[] | undefined {
 	const charge_modifiers = caster.FindAllModifiersByName("modifier_reimagined_charges") as modifier_charges[];
-	if (charge_modifiers) {
+	if (charge_modifiers != null) {
 		return charge_modifiers;
 	}
 
@@ -1039,7 +1039,7 @@ export function GenerateRandomArrayElement(array: Array<any>): any {
 
 export function CreateBagOfGoldInPosition(gold_min: number, gold_max: number, position: Vector, lifetime?: number) {
 	const gold_bag = CreateItem("item_bag_of_gold", undefined, undefined) as CDOTA_Item_BagOfGold;
-	if (gold_bag) {
+	if (gold_bag != null) {
 		gold_bag.SetPurchaseTime(0);
 		gold_bag.SetCurrentCharges(RandomInt(gold_min, gold_max));
 

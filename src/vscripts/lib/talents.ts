@@ -3,9 +3,9 @@
 import { BaseAbility, BaseModifier, registerAbility, registerModifier } from "./dota_ts_adapter";
 
 export const registerTalent = (name?: string, Modifier?: typeof BaseTalentModifier) => (ability: typeof BaseTalent) => {
-	registerAbility(name)(ability);
+	// registerAbility(name)(ability);
     //TODO: write function registerAbility(name,ability);
-    // I don't know if you can still use decorators like the functions we do here, but at the very least 
+    // Shush: I don't know if you can still use decorators like the functions we do here, but at the very least 
     // you should be able to make a separate, non decorator function that does what the decorator does,
     // and call that one instead.
 

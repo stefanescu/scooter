@@ -38,7 +38,7 @@ export class garrosh_decimate extends BaseAbility {
 
         const radius = this.GetSpecialValueFor("radius");
 
-        const units = FindUnitsInRadius(
+        const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             this.caster.GetAbsOrigin(),
             undefined,
@@ -51,7 +51,7 @@ export class garrosh_decimate extends BaseAbility {
             );
 
 
-        for (const unit of units) { 
+        for (const unit of enemies) { 
 
             unit.AddNewModifier (this.caster, this, modifier_decimate.name, { duration: 2 });
             
