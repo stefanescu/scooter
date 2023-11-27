@@ -9,15 +9,14 @@ export class nazeebo_corpse_spiders extends BaseAbility {
     cast_sound = "Hero_Lina.DragonSlave.Cast";
     cast_point = 0.3;
 
-    projParticle = "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf";
+    proj_fx = "particles/units/heroes/hero_meepo/meepo_earthbind_projectile_fx.vpcf";
 
-    damage = this.GetSpecialValueFor("damage");
     range = this.GetSpecialValueFor("range");
     speed = this.GetSpecialValueFor("speed");
-    duration = this.GetSpecialValueFor("duration");
+    spider_duration = this.GetSpecialValueFor("duration");
     radius = this.GetSpecialValueFor("radius");
 
-    textureName = "axe_culling_blade";
+    textureName = "broodmother_spawn_spiderlings";
 
     OnAbilityPhaseStart() {
         if (IsServer()) {
@@ -26,7 +25,6 @@ export class nazeebo_corpse_spiders extends BaseAbility {
 
         return true;
     }
-
 
     OnAbilityPhaseInterrupted() {
         this.caster.StopSound(this.cast_sound);
@@ -49,32 +47,33 @@ export class nazeebo_corpse_spiders extends BaseAbility {
         return this.radius;
     }
 
+    //todo: test if needed?
     OnAbilityUpgrade(upgradeAbility: object): void {
-        this.damage = this.GetSpecialValueFor("damage");
-        this.duration = this.GetSpecialValueFor("duration");
+        this.spider_duration = this.GetSpecialValueFor("duration");
         this.range = this.GetSpecialValueFor("range");
         this.speed = this.GetSpecialValueFor("speed");
         this.radius = this.GetSpecialValueFor("radius");
     }
 
     OnSpellStart() {
-		const vPos = this.GetCursorPosition()
-	
-        const vDirection = ((vPos - this.caster.GetAbsOrigin()) as Vector).Normalized();
+		const cursorPos = this.GetCursorPosition()
+        const casterPos = this.caster.GetAbsOrigin();
+
+        const vDirection = ((cursorPos - casterPos) as Vector).Normalized();
         vDirection.z = 0;
 
-        const vDistance = ((vPos - this.caster.GetAbsOrigin()) as Vector).Length();
+        const vDistance = ((cursorPos - casterPos) as Vector).Length();
+        const vVelocity = (vDirection * this.speed) as Vector;
 
+        
         this.particle = ParticleManager.CreateParticle(
-            this.projParticle,
+            this.proj_fx,
             ParticleAttachment.CUSTOMORIGIN,
             this.caster,
         );
-
-        ParticleManager.SetParticleControl(this.particle, 0, this.caster.GetAbsOrigin());
-        ParticleManager.SetParticleControl(this.particle, 1, vPos);
-        ParticleManager.SetParticleControl(this.particle, 2, Vector(this.speed, 0, 0));
-
+        ParticleManager.SetParticleControl(this.particle, 0, casterPos); //startPos
+        ParticleManager.SetParticleControl(this.particle, 1, cursorPos); //endPos
+        ParticleManager.SetParticleControl(this.particle, 2, Vector(this.speed, 0, 0)); //speed
 
         ProjectileManager.CreateLinearProjectile({
             Ability: this,
@@ -88,11 +87,12 @@ export class nazeebo_corpse_spiders extends BaseAbility {
             iUnitTargetTeam: UnitTargetTeam.NONE,
             iUnitTargetFlags: UnitTargetFlags.NONE,
             iUnitTargetType: UnitTargetType.NONE,
-            vVelocity: (vDirection * this.speed) as Vector,
+            vVelocity: vVelocity,
             bProvidesVision: true,
             iVisionRadius: this.radius,
             iVisionTeamNumber: this.caster.GetTeamNumber(),
         });
+        EmitSoundOn( "Hero_Lina.DragonSlave", this.GetCaster() );
 
         // const proj = {
         //     EffectName:  "particles/units/heroes/hero_witchdoctor/witchdoctor_cask.vpcf",
@@ -112,7 +112,6 @@ export class nazeebo_corpse_spiders extends BaseAbility {
         // };
 
         // ProjectileManager.CreateLinearProjectile ( proj);
-        EmitSoundOn( "Hero_Lina.DragonSlave", this.GetCaster() );
     
     }
 
@@ -121,7 +120,7 @@ export class nazeebo_corpse_spiders extends BaseAbility {
         const owner = this.caster.GetOwner();
         const teamNumber = this.caster.GetTeamNumber();
         
-        let nSpiders = 3 
+        const nSpiders = 3 
         for (let i = 0; i < nSpiders; i++) {
             const spider = CreateUnitByName("npc_dota_broodmother_spiderling",
                     location,
@@ -135,7 +134,7 @@ export class nazeebo_corpse_spiders extends BaseAbility {
                 spider.SetControllableByPlayer(this.caster.GetPlayerOwnerID(), false);
                 
                 spider.AddNewModifier(this.caster, this, 
-                    modifier_spiderling_expire.name, {duration: this.duration});
+                    modifier_spiderling_expire.name, {duration: this.spider_duration});
                 
                 spider.MoveToPositionAggressive(location); //todo: make spiders only attack units in aoe   
             }

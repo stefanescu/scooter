@@ -11,12 +11,8 @@ export class modifier_spiderling_expire extends BaseModifier {
         return true;
     }
 
-    IsPurgeException(): boolean {
-        return false;
-    }
-
     IsPurgable(): boolean {
-        return true;
+        return false;
     }
 
     OnDestroy(): void {
@@ -30,10 +26,6 @@ export class modifier_spiderling_expire extends BaseModifier {
 
     GetUnitLifetimeFraction(): number {
         return ( ( this.GetDieTime() - GameRules.GetGameTime() ) / this.GetDuration() );
-    }
-    
-    GetTexture(): string {
-        return "axe_counter_helix";
     }
     
 }
