@@ -1,27 +1,31 @@
 import { BaseModifier, registerModifier } from "../../lib/dota_ts_adapter";
 
 @registerModifier()
-export class modifier_night_rush extends BaseModifier {
+export class modifier_night_rush_sleep extends BaseModifier {
+    
+    sleepModifier = "modifier_elder_titan_echo_stomp";
     texture = "night_stalker_hunter_in_the_night";
 
-
     DeclareFunctions(): ModifierFunction[] {
-        return [ModifierFunction.MOVESPEED_BONUS_PERCENTAGE, ModifierFunction.OVERRIDE_ANIMATION];
+        return [ModifierFunction.MOVESPEED_BONUS_PERCENTAGE, ModifierFunction.TRANSLATE_ACTIVITY_MODIFIERS];
     }
 
     GetModifierMoveSpeedBonus_Percentage(): number {
-        return 30;
+        return 50;
     }
 
-    GetOverrideAnimation(): GameActivity {
-        return GameActivity.DOTA_NIGHTSTALKER_TRANSITION;
-    }
-
-    // CheckState(): Partial<Record<ModifierState, boolean>> {
-    //     return {
-    //         [ModifierState.FLYING]: true,
-    //     };
+    GetActivityTranslationModifiers(): string {
+		return "hunter_night";
+	}
+    // GetOverrideAnimation(): GameActivity {
+    //     return GameActivity.DOTA_NIGHTSTALKER_TRANSITION;
     // }
+
+    CheckState(): Partial<Record<ModifierState, boolean>> {
+        return {
+            [ModifierState.FLYING]: true,
+        };
+    }
     
     IsDebuff(): boolean {
         return false;
@@ -40,7 +44,8 @@ export class modifier_night_rush extends BaseModifier {
         return this.texture;
     }
     
-    OnCreated(params: object): void {
+    OnCreated(): void {
+        if (!IsServer()) return;
         
         this.StartIntervalThink(0.25);
         
@@ -48,25 +53,25 @@ export class modifier_night_rush extends BaseModifier {
 
     OnIntervalThink(): void {
          
+        const parent = this.GetParent();
+
         const units = FindUnitsInRadius(
-            this.GetParent().GetTeamNumber(),
-            this.GetParent().GetAbsOrigin(),
+            parent.GetTeamNumber(),
+            parent.GetAbsOrigin(),
             undefined,
             170,
             UnitTargetTeam.ENEMY,
             UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING | UnitTargetType.CREEP,
             UnitTargetFlags.NONE,
-            0,
+            FindOrder.ANY,
             false
             );
         
-        const kv = {
-            duration: 2
-        };
+        const kv = { duration: 2 };
 
         for (const unit of units) { 
             
-            unit.AddNewModifier(this.GetParent(), this.GetAbility(), "modifier_elder_titan_echo_stomp", kv);
+            unit.AddNewModifier(parent, this.GetAbility(), this.sleepModifier, kv);
     
         }
     }
