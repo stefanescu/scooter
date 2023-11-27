@@ -17,7 +17,7 @@ export class garrosh_groundbreaker extends BaseAbility {
 
         return true;
     }
-
+    
     OnAbilityPhaseInterrupted() {
         this.caster.StopSound(this.cast_sound);
     }
@@ -49,7 +49,7 @@ export class garrosh_groundbreaker extends BaseAbility {
         ParticleManager.SetParticleControl(particle, 0, smashPos);
         ParticleManager.ReleaseParticleIndex
         
-        const units = FindUnitsInRadius(
+        const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             smashPos,
             undefined,
@@ -61,12 +61,12 @@ export class garrosh_groundbreaker extends BaseAbility {
             false
             );
 
-        for (const unit of units) { 
+        for (const enemy of enemies) { 
 
-            unit.AddNewModifier (this.caster, this, BuiltInModifier.STUN , { duration: 2 });
+            enemy.AddNewModifier (this.caster, this, BuiltInModifier.STUN , { duration: 2 });
             
             ApplyDamage({
-                victim: unit,
+                victim: enemy,
                 attacker: this.caster,
                 damage: 250,
                 damage_type: DamageTypes.PHYSICAL

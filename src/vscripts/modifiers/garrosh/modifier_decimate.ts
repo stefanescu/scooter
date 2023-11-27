@@ -9,8 +9,8 @@ export class modifier_decimate extends BaseModifier {
     }
 
     
-    GetModifierMoveSpeedBonus_Percentage_Unique(): number {
-        return 30;
+    GetModifierMoveSpeedBonus_Percentage(): number {
+        return -30;
     }
 
     IsDebuff(): boolean {

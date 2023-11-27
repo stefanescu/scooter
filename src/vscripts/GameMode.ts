@@ -56,10 +56,10 @@ export class GameMode {
         
         //auto select hero here for quick testing
         const Game = GameRules.GetGameModeEntity();
-        // Game.SetCustomGameForceHero("npc_dota_hero_axe");
-        Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); 
-        // Game.SetCustomGameForceHero("npc_dota_hero_dark_seer"); 
-        // Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); 
+        // Game.SetCustomGameForceHero("npc_dota_hero_axe"); //garrosh
+        Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); //malganis
+        // Game.SetCustomGameForceHero("npc_dota_hero_dark_seer"); //guldan
+        // Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); // nazeebo
     }
 
     public OnStateChange(): void {
@@ -71,7 +71,7 @@ export class GameMode {
                 Tutorial.AddBot("npc_dota_hero_lina", "", "", false);
             }
         }
-
+        
         if (state === GameState.CUSTOM_GAME_SETUP) {
             // Automatically skip setup in tools
             if (IsInToolsMode()) {
@@ -108,6 +108,8 @@ export class GameMode {
             if (!unit.HasAbility("meepo_earthbind_ts_example")) {
                 // Add lua ability to the unit
                 unit.AddAbility("meepo_earthbind_ts_example");
+                  
+                unit.AddItemByName("black_king_bar");
             }
         }
     }

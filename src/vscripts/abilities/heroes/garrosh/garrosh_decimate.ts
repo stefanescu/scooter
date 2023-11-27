@@ -3,24 +3,14 @@ import { modifier_decimate } from "../../../modifiers/garrosh/modifier_decimate"
 
 @registerAbility()
 export class garrosh_decimate extends BaseAbility {
+    // Garrosh spins, slowing and damaging all enemy units and buildings
+    
+    //Properties
     particle?: ParticleID;
     caster = this.GetCaster();
     cast_anim = GameActivity.DOTA_CAST_ABILITY_3;
     cast_sound = "Hero_Axe.Counterhelix";
     cast_point = 0.2;
-
-
-    OnAbilityPhaseStart() {
-        if (IsServer()) {
-            this.caster.EmitSound(this.cast_sound);
-        }
-
-        return true;
-    }
-
-    OnAbilityPhaseInterrupted() {
-        this.caster.StopSound(this.cast_sound);
-    }
 
     GetCastAnimation(): GameActivity {
         return this.cast_anim;
@@ -34,10 +24,23 @@ export class garrosh_decimate extends BaseAbility {
         return AbilityBehavior.NO_TARGET | AbilityBehavior.IGNORE_BACKSWING | AbilityBehavior.DONT_CANCEL_MOVEMENT;
     }
 
-    OnSpellStart() {
+    OnAbilityPhaseStart() {
+        if (IsServer()) {
+            this.caster.EmitSound(this.cast_sound);
+        }
 
+        return true;
+    }
+
+    OnAbilityPhaseInterrupted() {
+        this.caster.StopSound(this.cast_sound);
+    }
+
+    OnSpellStart() {
+        // how big aoe?
         const radius = this.GetSpecialValueFor("radius");
 
+        //get list of enemies in aoe
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             this.caster.GetAbsOrigin(),
@@ -52,7 +55,7 @@ export class garrosh_decimate extends BaseAbility {
 
 
         for (const unit of enemies) { 
-
+            //add debuff, which slows
             unit.AddNewModifier (this.caster, this, modifier_decimate.name, { duration: 2 });
             
             ApplyDamage({
