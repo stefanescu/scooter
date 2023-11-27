@@ -1,10 +1,25 @@
 import { BaseModifier, registerModifier } from "../../lib/dota_ts_adapter";
 
 @registerModifier()
-export class modifier_night_rush_sleep extends BaseModifier {
-    
-    sleepModifier = "modifier_elder_titan_echo_stomp";
+export class modifier_night_rush_sleep_buff extends BaseModifier {
+    // gives flying, disarms malganis; checks for enemies and sleeps them
+    modifier_sleep = "modifier_elder_titan_echo_stomp";
     texture = "night_stalker_hunter_in_the_night";
+
+    // keep track of all slept units for this cast
+    slept_units: Set<CDOTA_BaseNPC> = new Set<CDOTA_BaseNPC>(); 
+        
+    IsDebuff() {
+        return false;
+    }
+    
+    IsHidden() {
+        return false;
+    }
+
+    IsPurgable() {
+        return false;
+    }
 
     DeclareFunctions(): ModifierFunction[] {
         return [ModifierFunction.MOVESPEED_BONUS_PERCENTAGE, ModifierFunction.TRANSLATE_ACTIVITY_MODIFIERS];
@@ -17,28 +32,13 @@ export class modifier_night_rush_sleep extends BaseModifier {
     GetActivityTranslationModifiers(): string {
 		return "hunter_night";
 	}
-    // GetOverrideAnimation(): GameActivity {
-    //     return GameActivity.DOTA_NIGHTSTALKER_TRANSITION;
-    // }
-
+ 
     CheckState(): Partial<Record<ModifierState, boolean>> {
         return {
             [ModifierState.FLYING]: true,
+            [ModifierState.DISARMED] : true
         };
     }
-    
-    IsDebuff(): boolean {
-        return false;
-    }
-    
-    IsHidden(): boolean {
-        return false;
-    }
-
-    IsPurgable(): boolean {
-        return false;
-    }
-
 
     GetTexture(): string {
         return this.texture;
@@ -48,14 +48,16 @@ export class modifier_night_rush_sleep extends BaseModifier {
         if (!IsServer()) return;
         
         this.StartIntervalThink(0.25);
-        
     }
 
-    OnIntervalThink(): void {
-         
+    OnRefresh(params: object): void {
+        this.slept_units.clear();    
+    }
+
+    OnIntervalThink(): void {        
         const parent = this.GetParent();
 
-        const units = FindUnitsInRadius(
+        const enemies = FindUnitsInRadius(
             parent.GetTeamNumber(),
             parent.GetAbsOrigin(),
             undefined,
@@ -67,14 +69,14 @@ export class modifier_night_rush_sleep extends BaseModifier {
             false
             );
         
-        const kv = { duration: 2 };
+        for (const enemy of enemies) { 
+            if (this.slept_units.has(enemy)) continue; //skip, already slept this unit
 
-        for (const unit of units) { 
-            
-            unit.AddNewModifier(parent, this.GetAbility(), this.sleepModifier, kv);
-    
+            this.slept_units.add(enemy);
+
+            const kv = { duration: 2 };
+            enemy.AddNewModifier(parent, this.GetAbility(), this.modifier_sleep, kv);
         }
     }
-
 }
 

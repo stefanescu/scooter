@@ -109,7 +109,7 @@ export class GameMode {
                 // Add lua ability to the unit
                 unit.AddAbility("meepo_earthbind_ts_example");
                   
-                unit.AddItemByName("black_king_bar");
+                unit.AddItemByName("item_black_king_bar");
             }
         }
     }

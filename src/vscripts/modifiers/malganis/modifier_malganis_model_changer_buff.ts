@@ -50,11 +50,17 @@ export class modifier_malganis_model_changer_buff extends BaseModifier {
 
         this.ApplyTransitionBuffParticle();
 
-        this.particle_buff_fx = ParticleManager.CreateParticle(this.particle_buff, ParticleAttachment.CUSTOMORIGIN_FOLLOW, this.parent);
-		ParticleManager.SetParticleControl(this.particle_buff_fx, 0, this.parent.GetAbsOrigin());
+        if (!this.particle_buff_fx)
+            this.particle_buff_fx = ParticleManager.CreateParticle(this.particle_buff, ParticleAttachment.CUSTOMORIGIN_FOLLOW, this.parent);
+		
+        ParticleManager.SetParticleControl(this.particle_buff_fx, 0, this.parent.GetAbsOrigin());
 		ParticleManager.SetParticleControl(this.particle_buff_fx, 1, Vector(1, 0, 0));
     }
 
+    OnRefresh(params: object): void {
+        this.OnCreated();
+    }
+    
     OnDestroy(): void {
         if (!IsServer()) return;
 
