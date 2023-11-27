@@ -10,25 +10,16 @@ export class malganis_night_rush extends BaseAbility {
     particle_darkness = "particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf";
 	particle_darkness_fx?: ParticleID;
 
-    cast_sound = "Hero_NightStalker.Darkness";
-    cast_anim = GameActivity.DOTA_GENERIC_CHANNEL_1;
+    sleep_sound = "Hero_Riki.SleepDart.Damage";//todo: this just doesn't work??
+    cast_sound = "night_stalker_nstalk_laugh_04"; //todo:
+
+    cast_anim = GameActivity.DOTA_ATTACK_EVENT;//todo:
     cast_point = 0.75;
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
+        PrecacheResource(PrecacheType.SOUNDFILE,this.sleep_sound, context);
 	}
-
-    OnAbilityPhaseStart() {
-        if (IsServer()) {
-            this.caster.EmitSound(this.cast_sound);
-        }
-        
-        return true;
-    }
-
-    OnAbilityPhaseInterrupted() {
-        this.caster.StopSound(this.cast_sound);
-    }
 
     GetCastAnimation(): GameActivity {
         return this.cast_anim;
@@ -54,12 +45,11 @@ export class malganis_night_rush extends BaseAbility {
 		ParticleManager.SetParticleControl(this.particle_darkness_fx, 1, this.caster.GetAbsOrigin());
 		ParticleManager.ReleaseParticleIndex(this.particle_darkness_fx);
 
-        const kv = {
-            duration: 3
-        };
+        const kv = { duration: 3 };
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
+        this.caster.StartGesture(GameActivity.DOTA_CAST_ABILITY_3);
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_darkness", kv); 
         // this.caster.AddNewModifier(this.caster, this, modifier_night_rush_dark_ascension.name, kv); 
 

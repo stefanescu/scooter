@@ -5,6 +5,7 @@ export class modifier_night_rush_sleep_buff extends BaseModifier {
     // gives flying, disarms malganis; checks for enemies and sleeps them
     modifier_sleep = "modifier_elder_titan_echo_stomp";
     texture = "night_stalker_hunter_in_the_night";
+    sleep_sound = "Hero_Riki.SleepDart.Damage";
 
     // keep track of all slept units for this cast
     slept_units: Set<CDOTA_BaseNPC> = new Set<CDOTA_BaseNPC>(); 
@@ -76,6 +77,8 @@ export class modifier_night_rush_sleep_buff extends BaseModifier {
 
             const kv = { duration: 2 };
             enemy.AddNewModifier(parent, this.GetAbility(), this.modifier_sleep, kv);
+
+            EmitSoundOn(this.sleep_sound, enemy);
         }
     }
 }

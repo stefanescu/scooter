@@ -55,6 +55,8 @@ export class modifier_malganis_model_changer_buff extends BaseModifier {
 		
         ParticleManager.SetParticleControl(this.particle_buff_fx, 0, this.parent.GetAbsOrigin());
 		ParticleManager.SetParticleControl(this.particle_buff_fx, 1, Vector(1, 0, 0));
+
+        this.parent.StartGesture(GameActivity.DOTA_CAST_ABILITY_3);//todo: proper E animation, right after model change? where exactly?
     }
 
     OnRefresh(params: object): void {
