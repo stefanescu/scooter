@@ -49,7 +49,7 @@ export class malganis_night_rush extends BaseAbility {
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
-        this.caster.StartGesture(GameActivity.DOTA_CAST_ABILITY_3);
+        // this.caster.StartGesture(GameActivity.DOTA_CAST_ABILITY_3);
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_darkness", kv); 
         // this.caster.AddNewModifier(this.caster, this, modifier_night_rush_dark_ascension.name, kv); 
 

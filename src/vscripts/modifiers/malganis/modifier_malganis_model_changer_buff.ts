@@ -36,7 +36,7 @@ export class modifier_malganis_model_changer_buff extends BaseModifier {
         // Change model to night
         const kv = { duration: 3 };
 
-		this.parent.AddNewModifier(this.caster, this.ability, modifier_malganis_model.name, kv); //todo :fix warning?
+		this.parent.AddNewModifier(this.caster, this.ability, modifier_malganis_model.name, kv);
 
         // Attach wearables
         this.wings = SpawnEntityFromTableSynchronous("prop_dynamic", { model: "models/heroes/nightstalker/nightstalker_wings_night.vmdl" });
