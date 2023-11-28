@@ -3,6 +3,7 @@
 #base "heroes/malganis.kv"
 #base "heroes/guldan.kv"
 #base "heroes/nazeebo.kv"
+#base "heroes/medivh.kv"
 
 
 "DOTAAbilities"
