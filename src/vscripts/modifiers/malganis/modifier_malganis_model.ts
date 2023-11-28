@@ -6,7 +6,7 @@ export class modifier_malganis_model extends BaseModifier {
 	night_model: string = "models/heroes/nightstalker/nightstalker_night.vmdl";
 
 	IsHidden() {
-		return true;
+		return false;
 	}
 	IsDebuff() {
 		return false;
@@ -29,4 +29,10 @@ export class modifier_malganis_model extends BaseModifier {
 	PreserveParticlesOnModelChanged(): 0 | 1 {
 		return 1;
 	}
+
+	OnRefresh(params: object): void {
+        if (!IsServer()) return;
+        
+        this.SetDuration(3, true);
+    }
 }

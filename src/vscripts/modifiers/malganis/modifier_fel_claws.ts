@@ -8,6 +8,13 @@ export class modifier_fel_claws extends BaseModifier {
 	ability: CDOTABaseAbility = this.GetAbility()!;
 	parent: CDOTA_BaseNPC = this.GetParent();
 
+	maxStacks = 2;
+
+    OnCreated(params: object): void {
+        if (!IsServer()) return;
+        
+		this.IncrementStackCount();
+    }
 
 	IsHidden() {
 		return false;
@@ -19,5 +26,16 @@ export class modifier_fel_claws extends BaseModifier {
 		return false;
 	}
 
+	OnRefresh(params: object): void {
+		if (!IsServer()) return;
+
+		if (this.GetStackCount() >= this.maxStacks) return;
+
+		this.IncrementStackCount();
+	}
+	
+	OnDestroy(): void {
+		this.DecrementStackCount();
+	}
 
 }

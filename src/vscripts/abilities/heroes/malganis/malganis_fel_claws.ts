@@ -18,9 +18,16 @@ export class malganis_fel_claws extends BaseAbility {
     particle_hit_right = "particles/econ/items/ursa/ursa_swift_claw/ursa_swift_claw_right.vpcf";
 	particle_hit_right_fx?: ParticleID;
 
-    cast_sound = "Hero_NightStalker.Darkness";
-    cast_anim = GameActivity.DOTA_ATTACK_SPECIAL;
+    cast_sound = "Hero_NightStalker.Void";
+    cast_anim = [
+                GameActivity.DOTA_CAST_ABILITY_2, 
+                GameActivity.DOTA_ATTACK,
+                GameActivity.DOTA_CAST_ABILITY_1
+                ];
+    anim_playback_rate = 2;
+
     cast_point = 0.1;
+
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -29,19 +36,26 @@ export class malganis_fel_claws extends BaseAbility {
 	}
 
     OnAbilityPhaseStart() {
-        if (IsServer()) {
-            this.caster.EmitSound(this.cast_sound);
-        }
-        
+        // this.caster.StartGestureWithPlaybackRate(GameActivity.DOTA_ATTACK, 2);
+        // this.caster.StartGestureWithPlaybackRate(GameActivity.DOTA_CAST_ABILITY_2, 2.5);
         return true;
     }
 
     OnAbilityPhaseInterrupted() {
-        this.caster.StopSound(this.cast_sound);
+        // this.caster.FadeGesture(GameActivity.DOTA_ATTACK);
     }
 
     GetCastAnimation(): GameActivity {
-        return this.cast_anim;
+        //determine ability phase from number of modifier stacks
+        let abilityPhase = this.caster.GetModifierStackCount(modifier_fel_claws.name,this.caster);
+        print ("swipe ", abilityPhase);
+ 
+        return this.cast_anim[abilityPhase];
+        
+    }
+
+    GetPlaybackRateOverride(): number {
+        return this.anim_playback_rate;
     }
 
     GetCastPoint(): number {
@@ -52,7 +66,7 @@ export class malganis_fel_claws extends BaseAbility {
         return AbilityBehavior.NO_TARGET
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
         | AbilityBehavior.ROOT_DISABLES 
-        | AbilityBehavior.IMMEDIATE;
+        | AbilityBehavior.IGNORE_BACKSWING;
     }
     
     OnSpellStart(): void {
@@ -60,9 +74,10 @@ export class malganis_fel_claws extends BaseAbility {
         const kv = { duration: 3 };
         
         //change model
-        if (!this.caster.FindModifierByName(modifier_malganis_model_changer_buff.name))
-            this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
+        // if (this.caster.FindModifierByName(modifier_malganis_model_changer_buff.name))
+        this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
+        // we later count the stacks on this modifier to determine which ability phase we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws.name, kv); 
         
         this.particle_hit_left_fx = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
