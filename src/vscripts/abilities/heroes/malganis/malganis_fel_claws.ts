@@ -24,8 +24,8 @@ export class malganis_fel_claws extends BaseAbility {
                 GameActivity.DOTA_ATTACK,
                 GameActivity.DOTA_CAST_ABILITY_1
                 ];
-    anim_playback_rate = 2;
 
+    anim_playback_rate = 2;
     cast_point = 0.1;
 
 

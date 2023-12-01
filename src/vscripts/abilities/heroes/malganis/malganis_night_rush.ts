@@ -13,8 +13,13 @@ export class malganis_night_rush extends BaseAbility {
     sleep_sound = "Hero_Riki.SleepDart.Damage";//todo: this just doesn't work??
     cast_sound = "night_stalker_nstalk_laugh_04"; //todo:
 
-    cast_anim = GameActivity.DOTA_ATTACK_EVENT;//todo:
+    cast_anim = GameActivity.DOTA_CAST_ABILITY_3;//todo:
     cast_point = 0.75;
+
+    // OnAbilityPhaseStart(): boolean {
+    //     this.caster.StartGesture(this.cast_anim);
+    //     return true;
+    // }
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -23,6 +28,10 @@ export class malganis_night_rush extends BaseAbility {
 
     GetCastAnimation(): GameActivity {
         return this.cast_anim;
+    }
+
+    GetPlaybackRateOverride(): number {
+        return 0.2;
     }
 
     GetCastPoint(): number {
