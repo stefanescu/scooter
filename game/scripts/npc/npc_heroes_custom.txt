@@ -42,5 +42,12 @@
 		"Ability1"					"medivh_arcane_rift"		// Ability 1
 	}
 
+	"npc_dota_hero_tyrande_template"
+	{
+		"override_hero"				"npc_dota_hero_mirana"			// Hero to override
+		"Ability1"					"tyrande_starfall"		// Ability 1
+	}
+
+
 	
 }

@@ -17,4 +17,5 @@
 	"npc_dota_hero_night_stalker" "1" //malganis
 	"npc_dota_hero_dark_seer" "1" //guldan
 	"npc_dota_hero_rubick" "1" //medivh
+	"npc_dota_hero_mirana" "1" //tyrande
 }

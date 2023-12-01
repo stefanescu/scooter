@@ -57,7 +57,9 @@ export class GameMode {
         //auto select hero here for quick testing
         const Game = GameRules.GetGameModeEntity();
         // Game.SetCustomGameForceHero("npc_dota_hero_axe"); //garrosh
-        Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); //malganis
+        // Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); //malganis
+        Game.SetCustomGameForceHero("npc_dota_hero_rubick"); //tyrande
+        // Game.SetCustomGameForceHero("npc_dota_hero_mirana"); //tyrande
         // Game.SetCustomGameForceHero("npc_dota_hero_dark_seer"); //guldan
         // Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); // nazeebo
     }
