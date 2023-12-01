@@ -31,13 +31,10 @@ export class garrosh_groundbreaker extends BaseAbility {
     }
 
     OnSpellStart() {
-        const point = this.GetCursorPosition();
-
-
         const radius = this.GetSpecialValueFor("radius");
 
+        const point = this.GetCursorPosition();
         const heroToPoint = (this.caster.GetForwardVector() * 400 ) as Vector;
-
         const smashPos = (this.caster.GetAbsOrigin() + heroToPoint) as Vector;
         
         const particle = ParticleManager.CreateParticle(
@@ -47,7 +44,7 @@ export class garrosh_groundbreaker extends BaseAbility {
         );
 
         ParticleManager.SetParticleControl(particle, 0, smashPos);
-        ParticleManager.ReleaseParticleIndex
+        ParticleManager.ReleaseParticleIndex;
         
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
@@ -57,7 +54,7 @@ export class garrosh_groundbreaker extends BaseAbility {
             UnitTargetTeam.ENEMY,
             UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING | UnitTargetType.CREEP,
             UnitTargetFlags.NONE,
-            0,
+            FindOrder.ANY,
             false
             );
 
@@ -70,7 +67,7 @@ export class garrosh_groundbreaker extends BaseAbility {
                 attacker: this.caster,
                 damage: 250,
                 damage_type: DamageTypes.PHYSICAL
-            })
+            });
     
         }
 

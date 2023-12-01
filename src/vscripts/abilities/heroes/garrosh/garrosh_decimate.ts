@@ -21,7 +21,8 @@ export class garrosh_decimate extends BaseAbility {
     }
 
     GetBehavior(): AbilityBehavior | Uint64 {
-        return AbilityBehavior.NO_TARGET | AbilityBehavior.IGNORE_BACKSWING | AbilityBehavior.DONT_CANCEL_MOVEMENT;
+        return AbilityBehavior.NO_TARGET | AbilityBehavior.IGNORE_BACKSWING
+             | AbilityBehavior.DONT_CANCEL_MOVEMENT;
     }
 
     OnAbilityPhaseStart() {
@@ -44,12 +45,12 @@ export class garrosh_decimate extends BaseAbility {
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             this.caster.GetAbsOrigin(),
-            undefined,
+            undefined, 
             radius,
             UnitTargetTeam.ENEMY,
             UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING,
             UnitTargetFlags.NONE,
-            0,
+            FindOrder.ANY,
             false
             );
 
