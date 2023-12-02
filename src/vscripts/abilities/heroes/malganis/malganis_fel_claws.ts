@@ -1,5 +1,5 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
-import { modifier_fel_claws } from "../../../modifiers/malganis/modifier_fel_claws";
+import { modifier_fel_claws_counter } from "../../../modifiers/malganis/modifier_fel_claws_counter";
 import { modifier_malganis_model_changer_buff } from "../../../modifiers/malganis/modifier_malganis_model_changer_buff";
 
 @registerAbility()
@@ -27,7 +27,9 @@ export class malganis_fel_claws extends BaseAbility {
 
     anim_playback_rate = 2;
     cast_point = 0.1;
-
+    
+    maxClawCount= 2;
+    cdBetweenClaws = 0.5;
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -47,11 +49,13 @@ export class malganis_fel_claws extends BaseAbility {
 
     GetCastAnimation(): GameActivity {
         //determine ability phase from number of modifier stacks
-        let abilityPhase = this.caster.GetModifierStackCount(modifier_fel_claws.name,this.caster);
-        print ("swipe ", abilityPhase);
+        const clawCount = this.CheckClawCount();
  
-        return this.cast_anim[abilityPhase];
-        
+        return this.cast_anim[clawCount];
+    }
+
+    CheckClawCount() {
+        return this.caster.GetModifierStackCount(modifier_fel_claws_counter.name, this.caster);
     }
 
     GetPlaybackRateOverride(): number {
@@ -62,6 +66,15 @@ export class malganis_fel_claws extends BaseAbility {
         return this.cast_point;
     }
     
+    GetCooldown(level: number): number {
+        if (!IsServer()) return super.GetCooldown(level);
+
+        const clawCount = this.CheckClawCount();
+        if (clawCount < this.maxClawCount) return this.cdBetweenClaws;
+        
+        return super.GetCooldown(level);
+    }
+
     GetBehavior(): AbilityBehavior | Uint64 {
         return AbilityBehavior.NO_TARGET
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
@@ -74,11 +87,11 @@ export class malganis_fel_claws extends BaseAbility {
         const kv = { duration: 3 };
         
         //change model
-        // if (this.caster.FindModifierByName(modifier_malganis_model_changer_buff.name))
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
-        // we later count the stacks on this modifier to determine which ability phase we are in
-        this.caster.AddNewModifier(this.caster, this, modifier_fel_claws.name, kv); 
+        // we count the stacks of this modifier to determine which ability phase (claw) we are in
+        this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
+        // on 3rd claw, add modifier_lion_impale
         
         this.particle_hit_left_fx = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
         ParticleManager.SetParticleControl(this.particle_hit_left_fx, 0, this.caster.GetAbsOrigin());
