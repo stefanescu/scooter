@@ -84,14 +84,57 @@ export class malganis_fel_claws extends BaseAbility {
     
     OnSpellStart(): void {
 
-        const kv = { duration: 3 };
-        
+        const point = this.GetCursorPosition();
+        const radius = 200;
+        const angle = 180 / 2;
+
+        const kv = { duration: 3 }; //temp
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
+        const enemies = FindUnitsInRadius(
+            this.caster.GetTeamNumber(),
+            this.caster.GetAbsOrigin(),
+            undefined,
+            radius,
+            UnitTargetTeam.ENEMY,
+            UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING | UnitTargetType.CREEP,
+            UnitTargetFlags.NONE,
+            FindOrder.ANY,
+            false
+            );
+
+
+        const origin = this.caster.GetOrigin();
+        const cast_direction = ((point - origin) as Vector).Normalized();
+        const cast_angle = VectorAngles(cast_direction).y;
+
+        for (const enemy of enemies) {
+
+            const enemy_direction = ((enemy.GetOrigin() -  origin) as Vector).Normalized();
+            const enemy_angle = VectorToAngles(enemy_direction).y;
+            const angle_diff = math.abs( AngleDiff(cast_angle, enemy_angle));
+
+            //outside cone range
+            if (angle_diff >= angle) continue; 
+            
+            ApplyDamage({
+                victim: enemy,
+                attacker: this.caster,
+                damage: 100,
+                damage_type: DamageTypes.MAGICAL
+            });
+
+            // on 3rd claw, add modifier_lion_impale
+            if (this.CheckClawCount() >= this.maxClawCount)
+                enemy.AddNewModifier (this.caster, this, "modifier_lion_impale" , kv);
+
+        }
+
+
         // we count the stacks of this modifier to determine which ability phase (claw) we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
-        // on 3rd claw, add modifier_lion_impale
+    
         
         this.particle_hit_left_fx = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
         ParticleManager.SetParticleControl(this.particle_hit_left_fx, 0, this.caster.GetAbsOrigin());
