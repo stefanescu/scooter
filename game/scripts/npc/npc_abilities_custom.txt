@@ -1,10 +1,15 @@
-#base "heroes/meepo.kv"
-#base "heroes/garrosh.kv"
-#base "heroes/malganis.kv"
-#base "heroes/guldan.kv"
-#base "heroes/nazeebo.kv"
-#base "heroes/medivh.kv"
-#base "heroes/tyrande.kv"
+#base "heroes/garrosh/garrosh_groundbreaker.kv"
+
+#base "heroes/malganis/malganis_fel_claws.kv"
+#base "heroes/malganis/malganis_night_rush.kv"
+
+#base "heroes/guldan/guldan/guldan_fel_flame.kv"
+
+#base "heroes/nazeebo/nazeebo/nazeebo_corpse_spiders.kv"
+
+#base "heroes/medivh/medivh/medivh_arcane_rift.kv"
+
+#base "heroes/tyrande/tyrande/tyrande_starfall.kv"
 
 
 "DOTAAbilities"

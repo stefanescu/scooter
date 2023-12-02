@@ -616,7 +616,7 @@ export function GetTalentSpecialValueFor(caster: CDOTA_BaseNPC, name: string, va
 			const abilityKVSpecial = "AbilitySpecial";
 			let hero_name = caster.GetUnitName();
 			hero_name = hero_name.replace("npc_dota_hero_", "");
-			const filepath = "scripts/npc/heroes/" + hero_name + "/abilities.kv";
+			const filepath = "scripts/npc/heroes/" + hero_name + "/abilities.kv"; //TODO: fix path and names?
 
 			let abilitiesKV;
 			if (abilityKVValueFile.has(filepath)) {

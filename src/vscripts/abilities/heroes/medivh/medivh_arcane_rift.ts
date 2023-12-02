@@ -9,17 +9,21 @@ export class medivh_arcane_rift extends BaseAbility {
     cast_sound = "Hero_Meepo.Earthbind.Cast";
     cast_point = 0.2;
 
-	crow_model = "models/items/beastmaster/hawk/beast_heart_marauder_beast_heart_marauder_raven/beast_heart_marauder_beast_heart_marauder_raven.vmdl";
-
-    hitParticle = "particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf";
-
     damage = this.GetSpecialValueFor("damage");
     range = this.GetSpecialValueFor("range");
     speed = this.GetSpecialValueFor("speed");
     textureName = "magnus_shockwave"
 
+	crow_model = "models/items/beastmaster/hawk/beast_heart_marauder_beast_heart_marauder_raven/beast_heart_marauder_beast_heart_marauder_raven.vmdl";
+
+    hitFx = "particles/units/heroes/hero_lina/lina_spell_dragon_slave_impact.vpcf";
+    projectileFx = "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf";
+
+
     Precache(context: CScriptPrecacheContext) {
         PrecacheModel(this.crow_model,context);
+        PrecacheResource(PrecacheType.PARTICLE, this.projectileFx, context);
+        PrecacheResource(PrecacheType.PARTICLE, this.hitFx, context);
     }
 
     GetCastAnimation(): GameActivity {
@@ -49,14 +53,14 @@ export class medivh_arcane_rift extends BaseAbility {
         direction.z = 0;
 
         const proj = {
-            EffectName:  "particles/units/heroes/hero_lina/lina_spell_dragon_slave.vpcf",
+            EffectName:  this.projectileFx,
             Ability: this,
-            vSpawnOrigin : this.GetCaster().GetOrigin(), 
+            vSpawnOrigin : this.caster.GetOrigin(), 
             fStartRadius : 50,
             fEndRadius : 100,
             vVelocity : ( direction * this.speed) as Vector,
             fDistance : this.range,
-            Source : this.GetCaster(),
+            Source : this.caster,
             iUnitTargetTeam: UnitTargetTeam.ENEMY,
             iUnitTargetType : UnitTargetType.HERO + UnitTargetType.BASIC + UnitTargetType.BUILDING,
         };
@@ -65,7 +69,7 @@ export class medivh_arcane_rift extends BaseAbility {
         EmitSoundOn( "Hero_Lina.DragonSlave", this.GetCaster() );
     
         const kv = { duration: 5 };
-        this.caster.AddNewModifier(this.caster, this, modifier_medivh_crow_model.name, kv);
+        this.caster.AddNewModifier(this.caster, this, modifier_medivh_crow_model.name, kv); //move
     }
 
 
