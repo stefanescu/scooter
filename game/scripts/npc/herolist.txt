@@ -13,9 +13,9 @@
 	"npc_dota_hero_phantom_assassin"	"1"
 	"npc_dota_hero_axe"	"1"
     "npc_dota_hero_warlock"	"1"
-    "npc_dota_hero_witch_doctor" "1" //nazeebo
-	"npc_dota_hero_night_stalker" "1" //malganis
-	"npc_dota_hero_dark_seer" "1" //guldan
-	"npc_dota_hero_rubick" "1" //medivh
-	"npc_dota_hero_mirana" "1" //tyrande
+    "npc_dota_hero_witch_doctor" "-1" //nazeebo
+	"npc_dota_hero_night_stalker" "-1" //malganis
+	"npc_dota_hero_dark_seer" "-1" //guldan
+	"npc_dota_hero_rubick" "-1" //medivh
+	"npc_dota_hero_mirana" "-1" //tyrande
 }

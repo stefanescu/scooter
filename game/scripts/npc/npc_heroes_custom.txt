@@ -2,12 +2,12 @@
 // NOTE: This is not for creating new heroes, this is for taking a currently existing hero as a template and overriding
 // the specified key-value combinations.  Use override_hero <hero_to_override> for this.
 
-#base "garrosh/hero.kv"
-#base "guldan/hero.kv"
-#base "malganis/hero.kv"
-#base "medivh/hero.kv"
-#base "nazeebo/hero.kv"
-#base "tyrande/hero.kv"
+#base "heroes/garrosh/hero.kv"
+#base "heroes/guldan/hero.kv"
+#base "heroes/malganis/hero.kv"
+#base "heroes/medivh/hero.kv"
+#base "heroes/nazeebo/hero.kv"
+#base "heroes/tyrande/hero.kv"
 
 "DOTAHeroes"
 {	
