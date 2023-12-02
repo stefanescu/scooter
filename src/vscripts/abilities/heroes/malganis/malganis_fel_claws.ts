@@ -1,5 +1,6 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
 import { modifier_fel_claws_counter } from "../../../modifiers/malganis/modifier_fel_claws_counter";
+import { modifier_fel_claws_dash } from "../../../modifiers/malganis/modifier_fel_claws_dash";
 import { modifier_malganis_model_changer_buff } from "../../../modifiers/malganis/modifier_malganis_model_changer_buff";
 
 @registerAbility()
@@ -91,6 +92,9 @@ export class malganis_fel_claws extends BaseAbility {
         const kv = { duration: 3 }; //temp
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
+        
+        // add dash modifier
+        this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_dash.name, {duration:0.3}); 
 
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
@@ -132,7 +136,7 @@ export class malganis_fel_claws extends BaseAbility {
         }
 
 
-        // we count the stacks of this modifier to determine which ability phase (claw) we are in
+        // we later count the stacks of this modifier to determine which ability phase (claw) we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
     
         
