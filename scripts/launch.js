@@ -11,7 +11,7 @@ const { getAddonName, getDotaPath } = require("./utils");
     // const args = ["-novid", "-tools", "-addon", getAddonName()];
 
     // const args = ["-novid", "-tools", "-addon", "+dota_launch_custom_game ${getAddonName()} dota"];
-    const args = ["-novid", "-tools", "-addon", "+dota_launch_custom_game ${getAddonName()} hero_demo_main"];
+    const args = ["-novid", "-tools", "-addon", "+dota_launch_custom_game scooter hero_demo_main"];
     
     spawn(path.join(win64, "dota2.exe"), args, { detached: true, cwd: win64 });
 })().catch(error => {

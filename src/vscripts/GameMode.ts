@@ -57,8 +57,8 @@ export class GameMode {
         //auto select hero here for quick testing
         const Game = GameRules.GetGameModeEntity();
         // Game.SetCustomGameForceHero("npc_dota_hero_axe"); //garrosh
-        // Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); //malganis
-        Game.SetCustomGameForceHero("npc_dota_hero_rubick"); //tyrande
+        Game.SetCustomGameForceHero("npc_dota_hero_night_stalker"); //malganis
+        // Game.SetCustomGameForceHero("npc_dota_hero_rubick"); //tyrande
         // Game.SetCustomGameForceHero("npc_dota_hero_mirana"); //tyrande
         // Game.SetCustomGameForceHero("npc_dota_hero_dark_seer"); //guldan
         // Game.SetCustomGameForceHero("npc_dota_hero_witch_doctor"); // nazeebo
@@ -107,12 +107,12 @@ export class GameMode {
         const unit = EntIndexToHScript(event.entindex) as CDOTA_BaseNPC; // Cast to npc since this is the 'npc_spawned' event
         // Give all real heroes (not illusions) the meepo_earthbind_ts_example spell
         if (unit.IsRealHero()) {
-            if (!unit.HasAbility("meepo_earthbind_ts_example")) {
+            // if (!unit.HasAbility("meepo_earthbind_ts_example")) 
                 // Add lua ability to the unit
-                unit.AddAbility("meepo_earthbind_ts_example");
+                // unit.AddAbility("meepo_earthbind_ts_example");
                   
-                unit.AddItemByName("item_black_king_bar");
-            }
+            unit.AddItemByName("item_black_king_bar");
+            
         }
     }
 }
