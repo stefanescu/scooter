@@ -1,5 +1,5 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
-import { modifier_night_rush_sleep_buff } from "../../../modifiers/malganis/modifier_night_rush_sleep_buff"
+import { modifier_night_rush_sleep_thinker } from "../../../modifiers/malganis/modifier_night_rush_sleep_thinker"
 import { modifier_malganis_model_changer_buff } from "../../../modifiers/malganis/modifier_malganis_model_changer_buff";
 
 @registerAbility()
@@ -66,7 +66,7 @@ export class malganis_night_rush extends BaseAbility {
         
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_hunter_in_the_night", kv); 
         //add buff which sleeps units around caster
-        this.caster.AddNewModifier(this.caster, this, modifier_night_rush_sleep_buff.name, kv); 
+        this.caster.AddNewModifier(this.caster, this, modifier_night_rush_sleep_thinker.name, kv); 
         
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_darkness_transform", kv);
         // this.caster.StartGesture(GameActivity.FLY);

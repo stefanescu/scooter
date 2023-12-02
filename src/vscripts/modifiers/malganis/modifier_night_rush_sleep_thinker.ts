@@ -1,14 +1,14 @@
 import { BaseModifier, registerModifier } from "../../lib/dota_ts_adapter";
 
 @registerModifier()
-export class modifier_night_rush_sleep_buff extends BaseModifier {
+export class modifier_night_rush_sleep_thinker extends BaseModifier {
     // gives flying, disarms malganis; checks for enemies and sleeps them
     modifier_sleep = "modifier_elder_titan_echo_stomp";
     texture = "night_stalker_hunter_in_the_night";
     sleep_sound = "Hero_Riki.SleepDart.Damage";
 
     // keep track of all slept units for this cast
-    slept_units: Set<CDOTA_BaseNPC> = new Set<CDOTA_BaseNPC>(); 
+    already_slept_units: Set<CDOTA_BaseNPC> = new Set<CDOTA_BaseNPC>(); 
         
     IsDebuff() {
         return false;
@@ -52,10 +52,14 @@ export class modifier_night_rush_sleep_buff extends BaseModifier {
     }
 
     OnRefresh(params: object): void {
-        this.slept_units.clear();    
+        if (!IsServer()) return;
+
+        this.already_slept_units.clear();    
     }
 
-    OnIntervalThink(): void {        
+    OnIntervalThink(): void {     
+        if (!IsServer()) return;
+
         const parent = this.GetParent();
 
         const enemies = FindUnitsInRadius(
@@ -70,12 +74,13 @@ export class modifier_night_rush_sleep_buff extends BaseModifier {
             false
             );
         
+        const kv = { duration: 2 };
         for (const enemy of enemies) { 
-            if (this.slept_units.has(enemy)) continue; //skip, already slept this unit
+            if (this.already_slept_units.has(enemy)) 
+                continue; //skip, already slept unit during this cast
 
-            this.slept_units.add(enemy);
+            this.already_slept_units.add(enemy);
 
-            const kv = { duration: 2 };
             enemy.AddNewModifier(parent, this.GetAbility(), this.modifier_sleep, kv);
 
             EmitSoundOn(this.sleep_sound, enemy);
