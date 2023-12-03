@@ -5,7 +5,6 @@ import { modifier_malganis_model_changer_buff } from "../../../modifiers/malgani
 
 @registerAbility()
 export class malganis_fel_claws extends BaseAbility {
-    particle?: ParticleID;
     caster = this.GetCaster();
  
     particle_darkness = "particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf";
@@ -20,17 +19,17 @@ export class malganis_fel_claws extends BaseAbility {
 	particle_hit_right_fx?: ParticleID;
 
     cast_sound = "Hero_NightStalker.Void";
+    
     cast_anim = [
                 GameActivity.DOTA_CAST_ABILITY_2, 
                 GameActivity.DOTA_ATTACK,
                 GameActivity.DOTA_CAST_ABILITY_1
                 ];
-
-    anim_playback_rate = 2;
+    anim_playback_rate = [1, 1, 2]; 
     cast_point = 0.1;
     
-    maxSlashCount= 2;
-    cdBetweenSlashes = 1;
+    max_slash_count= 2;
+    cd_between_slashes = 0.1;
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -53,12 +52,24 @@ export class malganis_fel_claws extends BaseAbility {
         return this.cast_anim[this.CheckSlashCount()];
     }
 
+    GetPlaybackRateOverride(): number {
+        return this.anim_playback_rate[this.CheckSlashCount()];
+    }
+
     CheckSlashCount() {
         return this.caster.GetModifierStackCount(modifier_fel_claws_counter.name, this.caster);
     }
+    
+    IsFirstSlash() {
+        return this.CheckSlashCount() == this.max_slash_count - 2;
+    }
 
-    GetPlaybackRateOverride(): number {
-        return this.anim_playback_rate;
+    IsSecondSlash() {
+        return this.CheckSlashCount() == this.max_slash_count - 1;
+    }
+
+    IsThirdSlash() {
+        return this.CheckSlashCount() >= this.max_slash_count;
     }
 
     GetCastPoint(): number {
@@ -68,17 +79,19 @@ export class malganis_fel_claws extends BaseAbility {
     GetCooldown(level: number): number {
         if (!IsServer()) return super.GetCooldown(level); // UI always shows original cd
 
-        if (this.CheckSlashCount() < this.maxSlashCount) return this.cdBetweenSlashes; // cd is this.cdBetweenSLashes until we reach max slashes
+        if (this.IsThirdSlash()) return super.GetCooldown(level); // after max slashes, original cd
+
+        return this.cd_between_slashes; // cd is this.cdBetweenSLashes until we reach max slashes
         
-        return super.GetCooldown(level); // after max slashes, original cd
+        // return super.GetCooldown(level); // after max slashes, original cd
     }
 
     GetManaCost(level: number): number {
         if (!IsServer()) return super.GetManaCost(level); //UI always shows original manacost
 
-        if (this.CheckSlashCount() == 0) return super.GetManaCost(level); //first slash costs original mana
+        if (this.IsFirstSlash()) return super.GetManaCost(level); //only first slash costs mana
         
-        return 0; // slash 2 and 3 cost 0 mana
+        return 0; // rest of slashes cost 0 mana
     }
 
     GetBehavior(): AbilityBehavior | Uint64 {
@@ -124,7 +137,7 @@ export class malganis_fel_claws extends BaseAbility {
             const enemy_angle = VectorToAngles(enemy_direction).y;
             const angle_diff = math.abs( AngleDiff(cast_angle, enemy_angle));
 
-            //outside cone range
+            //outside cone range, skip
             if (angle_diff < aoe_angle) continue; 
             
             ApplyDamage({
@@ -135,7 +148,7 @@ export class malganis_fel_claws extends BaseAbility {
             });
 
             // on 3rd slash, stun add modifier_lion_impale
-            if (this.CheckSlashCount() >= this.maxSlashCount) 
+            if (this.IsThirdSlash()) 
                 enemy.AddNewModifier (this.caster, this, "modifier_lion_impale" , kv);
 
         }
@@ -144,9 +157,38 @@ export class malganis_fel_claws extends BaseAbility {
         // we later count the stacks of this modifier to determine which ability phase (slash) we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
         
-        this.particle_hit_left_fx = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
-        ParticleManager.SetParticleControl(this.particle_hit_left_fx, 0, this.caster.GetAbsOrigin());
+        this.PlayFx();
 
     }
     
+
+    private PlayFx() {
+        let fxId;
+
+        if (this.IsThirdSlash()) { print("c");
+            fxId = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
+            ParticleManager.SetParticleControl(fxId, 0, this.caster.GetAbsOrigin());
+            ParticleManager.ReleaseParticleIndex(fxId);
+
+            fxId = ParticleManager.CreateParticle(this.particle_hit_right, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
+            ParticleManager.SetParticleControl(fxId, 0, this.caster.GetAbsOrigin());
+            ParticleManager.ReleaseParticleIndex(fxId);
+
+            return;
+        }
+
+        let fx;
+        if (this.IsSecondSlash()) {
+            fx = this.particle_hit_left;
+            print("b");
+        }
+        else {
+            fx = this.particle_hit_right;
+            print("a");
+        }
+        fxId = ParticleManager.CreateParticle(fx, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
+        ParticleManager.SetParticleControl(fxId, 0, this.caster.GetAbsOrigin());
+        ParticleManager.ReleaseParticleIndex(fxId);
+
+    }
 }
