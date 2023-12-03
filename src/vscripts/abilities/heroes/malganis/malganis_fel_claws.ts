@@ -29,8 +29,8 @@ export class malganis_fel_claws extends BaseAbility {
     anim_playback_rate = 2;
     cast_point = 0.1;
     
-    maxClawCount= 2;
-    cdBetweenClaws = 0.5;
+    maxSlashCount= 2;
+    cdBetweenSlashes = 0;
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -50,12 +50,10 @@ export class malganis_fel_claws extends BaseAbility {
 
     GetCastAnimation(): GameActivity {
         //determine ability phase from number of modifier stacks
-        const clawCount = this.CheckClawCount();
- 
-        return this.cast_anim[clawCount];
+        return this.cast_anim[this.CheckSlashCount()];
     }
 
-    CheckClawCount() {
+    CheckSlashCount() {
         return this.caster.GetModifierStackCount(modifier_fel_claws_counter.name, this.caster);
     }
 
@@ -68,19 +66,25 @@ export class malganis_fel_claws extends BaseAbility {
     }
     
     GetCooldown(level: number): number {
-        if (!IsServer()) return super.GetCooldown(level);
+        if (!IsServer()) return super.GetCooldown(level); // UI always shows original cd
 
-        const clawCount = this.CheckClawCount();
-        if (clawCount < this.maxClawCount) return this.cdBetweenClaws;
+        if (this.CheckSlashCount() < this.maxSlashCount) return this.cdBetweenSlashes; // cd is this.cdBetweenSLashes until we reach max slashes
         
-        return super.GetCooldown(level);
+        return super.GetCooldown(level); // after max slashes, original cd
+    }
+
+    GetManaCost(level: number): number {
+        if (!IsServer()) return super.GetManaCost(level); //UI always shows original manacost
+
+        if (this.CheckSlashCount() == 0) return super.GetManaCost(level); //first slash costs original mana
+        
+        return 0; // slash 2 and 3 cost 0 mana
     }
 
     GetBehavior(): AbilityBehavior | Uint64 {
         return AbilityBehavior.NO_TARGET
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
-        | AbilityBehavior.ROOT_DISABLES 
-        | AbilityBehavior.IGNORE_BACKSWING;
+        | AbilityBehavior.ROOT_DISABLES;
     }
     
     OnSpellStart(): void {
@@ -129,14 +133,14 @@ export class malganis_fel_claws extends BaseAbility {
                 damage_type: DamageTypes.MAGICAL
             });
 
-            // on 3rd claw, add modifier_lion_impale
-            if (this.CheckClawCount() >= this.maxClawCount)
+            // on 3rd slash, stun add modifier_lion_impale
+            if (this.CheckSlashCount() >= this.maxSlashCount)
                 enemy.AddNewModifier (this.caster, this, "modifier_lion_impale" , kv);
 
         }
 
 
-        // we later count the stacks of this modifier to determine which ability phase (claw) we are in
+        // we later count the stacks of this modifier to determine which ability phase (slash) we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
     
         
