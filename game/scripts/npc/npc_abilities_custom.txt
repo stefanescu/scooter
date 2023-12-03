@@ -2,6 +2,7 @@
 
 #base "heroes/malganis/malganis_fel_claws.kv"
 #base "heroes/malganis/malganis_night_rush.kv"
+#base "heroes/malganis/malganis_necrotic_embrace.kv"
 
 #base "heroes/guldan/guldan/guldan_fel_flame.kv"
 

@@ -1,0 +1,67 @@
+"DOTAAbilities"
+{
+    //=================================================================================================================
+    // Malganis: Necrotic Embrace
+    //=================================================================================================================
+    "malganis_necrotic_embrace"
+    {
+        // General
+        //-------------------------------------------------------------------------------------------------------------
+        "BaseClass"                     "ability_lua"
+        "ScriptFile"                    "abilities/heroes/malganis/malganis_necrotic_embrace.lua"
+        "AbilityTextureName"            "night_stalker_darkness"
+        "AbilityBehavior"               "DOTA_ABILITY_BEHAVIOR_AOE | DOTA_ABILITY_BEHAVIOR_IGNORE_BACKSWING"
+        "SpellImmunityType"             "SPELL_IMMUNITY_ENEMIES_NO"
+        "SpellDispellableType"          "SPELL_DISPELLABLE_YES_STRONG"
+        "FightRecapLevel"               "1"
+        "AbilitySound"                  "Hero_Meepo.Earthbind.Cast"
+
+
+        // Casting
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCastRange"              "350"
+        "AbilityCastPoint"              "1.0"
+
+        // Time
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityCooldown"               "8"
+
+        // Cost
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilityManaCost"               "35"
+
+        // Special
+        //-------------------------------------------------------------------------------------------------------------
+        "AbilitySpecial"
+        {
+            "01"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "duration"              "2.0"
+            }
+            "02"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "radius"                "220"
+            }
+            "03"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "speed"                 "857"
+            }
+            "04"
+            {
+                "var_type"              "FIELD_INTEGER"
+                "tooltip_range"         "1250"
+            }
+            // Adding cooldown and praying this gets synced
+            "05"
+            {
+                "var_type"              "FIELD_FLOAT"
+                "cooldown"              "3"
+                "LinkedSpecialBonus"    "special_bonus_unique_meepo3"
+            }
+
+        }
+    }
+}
