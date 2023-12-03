@@ -23,7 +23,7 @@ export class malganis_necrotic_embrace_buff extends BaseModifier {
     }
 
     GetModifierIncomingDamage_Percentage(event: ModifierAttackEvent): number {
-        return 25;
+        return -25;
     }
 
     GetActivityTranslationModifiers(): string {
