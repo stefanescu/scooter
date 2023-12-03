@@ -30,7 +30,7 @@ export class malganis_fel_claws extends BaseAbility {
     cast_point = 0.1;
     
     maxSlashCount= 2;
-    cdBetweenSlashes = 0;
+    cdBetweenSlashes = 1;
 
     Precache(context: CScriptPrecacheContext) {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_darkness, context);
@@ -82,7 +82,7 @@ export class malganis_fel_claws extends BaseAbility {
     }
 
     GetBehavior(): AbilityBehavior | Uint64 {
-        return AbilityBehavior.NO_TARGET
+        return AbilityBehavior.AOE | AbilityBehavior.POINT
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
         | AbilityBehavior.ROOT_DISABLES;
     }
@@ -90,8 +90,12 @@ export class malganis_fel_claws extends BaseAbility {
     OnSpellStart(): void {
 
         const point = this.GetCursorPosition();
+        const origin = this.caster.GetOrigin();
+        const cast_dir = ((origin - point) as Vector).Normalized();
+        const cast_angle = VectorAngles(cast_dir).y;
+
         const radius = 200;
-        const angle = 180 / 2;
+        const aoe_angle = 180 / 2;
 
         const kv = { duration: 3 }; //temp
         //change model
@@ -113,9 +117,6 @@ export class malganis_fel_claws extends BaseAbility {
             );
 
 
-        const origin = this.caster.GetOrigin();
-        const cast_direction = ((point - origin) as Vector).Normalized();
-        const cast_angle = VectorAngles(cast_direction).y;
 
         for (const enemy of enemies) {
 
@@ -124,7 +125,7 @@ export class malganis_fel_claws extends BaseAbility {
             const angle_diff = math.abs( AngleDiff(cast_angle, enemy_angle));
 
             //outside cone range
-            if (angle_diff >= angle) continue; 
+            if (angle_diff < aoe_angle) continue; 
             
             ApplyDamage({
                 victim: enemy,
@@ -134,7 +135,7 @@ export class malganis_fel_claws extends BaseAbility {
             });
 
             // on 3rd slash, stun add modifier_lion_impale
-            if (this.CheckSlashCount() >= this.maxSlashCount)
+            if (this.CheckSlashCount() >= this.maxSlashCount) 
                 enemy.AddNewModifier (this.caster, this, "modifier_lion_impale" , kv);
 
         }
@@ -142,7 +143,6 @@ export class malganis_fel_claws extends BaseAbility {
 
         // we later count the stacks of this modifier to determine which ability phase (slash) we are in
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_counter.name, kv); 
-    
         
         this.particle_hit_left_fx = ParticleManager.CreateParticle(this.particle_hit_left, ParticleAttachment.ABSORIGIN_FOLLOW, this.caster);
         ParticleManager.SetParticleControl(this.particle_hit_left_fx, 0, this.caster.GetAbsOrigin());

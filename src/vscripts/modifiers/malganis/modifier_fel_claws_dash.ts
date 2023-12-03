@@ -20,8 +20,9 @@ export class modifier_fel_claws_dash extends BaseModifierMotionHorizontal {
 		return false;
 	}
 
-	OnCreated(params: object): void {
+	OnCreated() {
 		if (!IsServer()) return;
+
 
 		// Check if the parent is currently affected by motion controllers - do nothing if so
 		if (this.parent.IsCurrentlyVerticalMotionControlled() || this.parent.IsCurrentlyHorizontalMotionControlled()) this.Destroy();
@@ -30,14 +31,20 @@ export class modifier_fel_claws_dash extends BaseModifierMotionHorizontal {
 		if (!this.ApplyHorizontalMotionController()) return;
 	}
 
+	OnRefresh() {
+		if (this.parent.IsCurrentlyVerticalMotionControlled()
+		 || this.parent.IsCurrentlyHorizontalMotionControlled()) return;
+	}
+
 	UpdateHorizontalMotion(me: CDOTA_BaseNPC, dt: number): void {
 		if (!IsServer()) return;
-		
+
 		if (this.total_traveled >= this.travel_distance!) return;
 		
 		const distance_per_frame = (this.travel_distance! / this.GetDuration()) * dt;
-		const direction = this.parent.GetForwardVector();
-		const caster_new_pos = (this.parent.GetAbsOrigin() + direction * distance_per_frame) as Vector;
+		// const direction = this.parent.GetForwardVector();
+		const cast_direction = ((this.parent.GetCursorPosition() - this.parent.GetOrigin()) as Vector).Normalized();
+		const caster_new_pos = (this.parent.GetAbsOrigin() + cast_direction * distance_per_frame) as Vector;
 
 		this.parent.SetAbsOrigin(caster_new_pos);
 	}

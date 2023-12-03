@@ -10,11 +10,7 @@ export class modifier_fel_claws_counter extends BaseModifier {
 	
 	maxStacks = 2;
 
-    OnCreated(params: object): void {
-        if (!IsServer()) return;
-        
-		this.IncrementStackCount();
-    }
+  
 
 	IsHidden() {
 		return false;
@@ -26,10 +22,19 @@ export class modifier_fel_claws_counter extends BaseModifier {
 		return false;
 	}
 
-	OnRefresh(params: object): void {
+	OnCreated() {
+        if (!IsServer()) return;
+        
+		this.IncrementStackCount();
+    }
+
+	OnRefresh(){
 		if (!IsServer()) return;
 
-		if (this.GetStackCount() >= this.maxStacks) return;
+		if (this.GetStackCount() >= this.maxStacks){
+			this.parent.RemoveAllModifiersOfName(this.GetName());
+			return;
+		}
 
 		this.IncrementStackCount();
 	}
