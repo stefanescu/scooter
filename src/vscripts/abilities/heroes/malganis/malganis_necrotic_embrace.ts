@@ -53,9 +53,9 @@ export class malganis_necrotic_embrace extends BaseAbility {
         const kv = { duration: 3 };
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
+        //add armor buff
         this.caster.AddNewModifier(this.caster, this, malganis_necrotic_embrace_buff.name, kv); 
 
-        //add armor buff
         // this.caster.AddNewModifier(this.caster, this, modifier_.name, kv); 
 
         // this.caster.StartGestureWithFadeAndPlaybackRate(GameActivity.DOTA_CAST_ABILITY_2, 1, 1, 1);
@@ -71,6 +71,28 @@ export class malganis_necrotic_embrace extends BaseAbility {
             this.caster.StartGestureWithFadeAndPlaybackRate(GameActivity.DOTA_NIGHTSTALKER_TRANSITION, 0.1, 0.1, 1);
             i = 0
             print(2);
+        }
+
+        const radius = 200;
+        const enemies = FindUnitsInRadius(
+            this.caster.GetTeamNumber(),
+            this.caster.GetAbsOrigin(),
+            undefined,
+            radius,
+            UnitTargetTeam.ENEMY,
+            UnitTargetType.BASIC | UnitTargetType.HERO | UnitTargetType.BUILDING | UnitTargetType.CREEP,
+            UnitTargetFlags.NONE,
+            FindOrder.ANY,
+            false
+            );
+
+        for (const enemy of enemies) {
+            ApplyDamage({
+                victim: enemy,
+                attacker: this.caster,
+                damage: 100,
+                damage_type: DamageTypes.MAGICAL
+            });
         }
     }
 
