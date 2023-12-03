@@ -87,8 +87,6 @@ export class malganis_fel_claws extends BaseAbility {
     }
 
     GetManaCost(level: number): number {
-        if (!IsServer()) return super.GetManaCost(level); //UI always shows original manacost
-
         if (this.IsFirstSlash()) return super.GetManaCost(level); //only first slash costs mana
         
         return 0; // rest of slashes cost 0 mana
