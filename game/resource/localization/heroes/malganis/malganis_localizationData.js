@@ -22,13 +22,6 @@ function GenerateLocalizationData() {
         name: "Night Rush",
         description: "After 0.75 seconds, gain 50% Movement Speed for 2 seconds. While active, Mal'Ganis can move through enemy Heroes and put them to Sleep for 2.5 seconds.",
         lore: "HAHA LOL2222231313",
-    },
-    {
-        // Q
-        ability_classname: "malganis_fel_claws",
-        name: "Fel Claws",
-        description: "Violently slash in the chosen direction, dealing x damage to enemies. Reactivate to slash up to 2 more times. The third slash Stuns enemies for 0.75 seconds.",
-        lore: "HAHA LOL2222231313",
     });
     // Return data to compiler
     return localization_info;

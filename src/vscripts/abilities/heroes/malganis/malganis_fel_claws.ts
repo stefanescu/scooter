@@ -100,13 +100,9 @@ export class malganis_fel_claws extends BaseAbility {
     
     OnSpellStart(): void {
 
-        const point = this.GetCursorPosition();
-        const origin = this.caster.GetOrigin();
-        const cast_dir = ((origin - point) as Vector).Normalized();
-        const cast_angle = VectorAngles(cast_dir).y;
+        
 
         const radius = 200;
-        const aoe_angle = 180 / 2;
 
         const kv = { duration: 3 }; //temp
         //change model
@@ -114,7 +110,7 @@ export class malganis_fel_claws extends BaseAbility {
         
         // add dash modifier
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_dash.name, {duration:0.3}); 
-
+        //find enemies in a circle,
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             this.caster.GetAbsOrigin(),
@@ -127,6 +123,11 @@ export class malganis_fel_claws extends BaseAbility {
             false
             );
 
+        const point = this.GetCursorPosition();
+        const origin = this.caster.GetOrigin();
+        const cast_dir = ((origin - point) as Vector).Normalized();
+        const cast_angle = VectorAngles(cast_dir).y;
+        const aoe_angle = 180 / 2;
 
 
         for (const enemy of enemies) {
@@ -135,8 +136,8 @@ export class malganis_fel_claws extends BaseAbility {
             const enemy_angle = VectorToAngles(enemy_direction).y;
             const angle_diff = math.abs( AngleDiff(cast_angle, enemy_angle));
 
-            //outside cone range, skip
-            if (angle_diff < aoe_angle) continue; 
+            //use angles to skip enemies outside cone AOE, facing forward
+            if (this.IsOutsideAOERange(angle_diff, aoe_angle)) continue; 
             
             ApplyDamage({
                 victim: enemy,
@@ -159,6 +160,10 @@ export class malganis_fel_claws extends BaseAbility {
 
     }
     
+
+    private IsOutsideAOERange(angle_diff: number, aoe_angle: number) {
+        return angle_diff < aoe_angle;
+    }
 
     private PlayFx() {
         let fxId;

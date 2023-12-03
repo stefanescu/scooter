@@ -13,8 +13,10 @@ export class malganis_night_rush extends BaseAbility {
     sleep_sound = "Hero_Riki.SleepDart.Damage";//todo: this just doesn't work??
     cast_sound = "night_stalker_nstalk_laugh_04"; //todo:
 
-    cast_anim = GameActivity.DOTA_CAST_ABILITY_3;//todo:
+    // cast_anim = GameActivity.DOTA_CAST_ABILITY_3_END;//todo:
+    cast_anim = GameActivity.DOTA_CAST_ABILITY_4;//todo:
     cast_point = 0.75;
+    // cast_point = 1.5;
 
     // OnAbilityPhaseStart(): boolean {
     //     this.caster.StartGesture(this.cast_anim);
@@ -31,7 +33,7 @@ export class malganis_night_rush extends BaseAbility {
     }
 
     GetPlaybackRateOverride(): number {
-        return 0.2;
+        return 0.3;
     }
 
     GetCastPoint(): number {
@@ -58,6 +60,8 @@ export class malganis_night_rush extends BaseAbility {
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
 
+        this.caster.StartGesture(GameActivity.DOTA_CAST_ABILITY_3); //start fly
+
         // this.caster.StartGesture(GameActivity.DOTA_CAST_ABILITY_3);
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_darkness", kv); 
         // this.caster.AddNewModifier(this.caster, this, modifier_night_rush_dark_ascension.name, kv); 
@@ -69,7 +73,6 @@ export class malganis_night_rush extends BaseAbility {
         this.caster.AddNewModifier(this.caster, this, modifier_night_rush_sleep_thinker.name, kv); 
         
         // this.caster.AddNewModifier(this.caster, this, "modifier_night_stalker_darkness_transform", kv);
-        // this.caster.StartGesture(GameActivity.FLY);
     }
 
     // GetChannelAnimation(): GameActivity {

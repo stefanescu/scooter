@@ -6,8 +6,5 @@
         "DOTA_Tooltip_Ability_malganis_night_rush"    "Night Rush"
         "DOTA_Tooltip_Ability_malganis_night_rush_description"    "After 0.75 seconds, gain 50% Movement Speed for 2 seconds. While active, Mal'Ganis can move through enemy Heroes and put them to Sleep for 2.5 seconds."
         "DOTA_Tooltip_Ability_malganis_night_rush_Lore"    "HAHA LOL2222231313"
-        "DOTA_Tooltip_Ability_malganis_fel_claws"    "Fel Claws"
-        "DOTA_Tooltip_Ability_malganis_fel_claws_description"    "Violently slash in the chosen direction, dealing x damage to enemies. Reactivate to slash up to 2 more times. The third slash Stuns enemies for 0.75 seconds."
-        "DOTA_Tooltip_Ability_malganis_fel_claws_Lore"    "HAHA LOL2222231313"
     }
 }

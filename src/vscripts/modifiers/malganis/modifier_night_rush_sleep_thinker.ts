@@ -83,7 +83,7 @@ export class modifier_night_rush_sleep_thinker extends BaseModifier {
 
             enemy.AddNewModifier(parent, this.GetAbility(), this.modifier_sleep, kv);
 
-            EmitSoundOn(this.sleep_sound, enemy);
+            EmitSoundOn(this.sleep_sound, enemy);            
         }
     }
 }
