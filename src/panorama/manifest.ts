@@ -1,1 +1,1 @@
-$.Msg("ui manifest loaded");
+$.Msg("3333ui manifest loaded");

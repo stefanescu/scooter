@@ -1,7 +1,7 @@
-$.Msg("Hud panorama loaded");
+$.Msg("222222Hud panorama loaded");
 
 function OnCloseButtonClicked() {
-    $.Msg("Example close button clicked");
+    $.Msg("!!!!!!!!!!!!!Example close button clicked");
 
     // Find panel by id
     const examplePanel = $("#ExamplePanel");
@@ -23,7 +23,7 @@ GameEvents.Subscribe("example_event", (data: NetworkedData<ExampleEventData>) =>
 
     const myArray = toArray(myArrayObject); // We can turn it back into an array ourselves.
 
-    $.Msg("Received example event", myNumber, myString, myBoolean, myArrayObject, myArray);
+    $.Msg("Received example event!!!!!!!!!!!!!!!!!", myNumber, myString, myBoolean, myArrayObject, myArray);
 
 });
 

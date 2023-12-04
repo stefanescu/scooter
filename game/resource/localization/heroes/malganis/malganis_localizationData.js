@@ -22,6 +22,12 @@ function GenerateLocalizationData() {
         name: "Night Rush",
         description: "After 0.75 seconds, gain 50% Movement Speed for 2 seconds. While active, Mal'Ganis can move through enemy Heroes and put them to Sleep for 2.5 seconds.",
         lore: "HAHA LOL2222231313",
+    }, {
+        // W
+        ability_classname: "malganis_necrotic_embrace",
+        name: "Necrotic Embrace",
+        description: "Desecrate the air, dealing 110 damage to nearby enemies and gaining 25 Armor for 3 seconds.",
+        lore: "HAHA LOL2222231313",
     });
     // Return data to compiler
     return localization_info;
