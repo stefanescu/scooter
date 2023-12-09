@@ -1,5 +1,5 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
-import { malganis_necrotic_embrace_buff } from "../../../modifiers/malganis/malganis_necrotic_embrace_buff";
+import { modifier_necrotic_embrace_buff } from "../../../modifiers/malganis/modifier_necrotic_embrace_buff";
 import { modifier_malganis_model_changer_buff } from "../../../modifiers/malganis/modifier_malganis_model_changer_buff";
 
 @registerAbility()
@@ -54,7 +54,7 @@ export class malganis_necrotic_embrace extends BaseAbility {
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
         //add armor buff
-        this.caster.AddNewModifier(this.caster, this, malganis_necrotic_embrace_buff.name, kv); 
+        this.caster.AddNewModifier(this.caster, this, modifier_necrotic_embrace_buff.name, kv); 
 
         // this.caster.AddNewModifier(this.caster, this, modifier_.name, kv); 
 

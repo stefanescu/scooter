@@ -52,8 +52,7 @@ export class malganis_dark_conversion extends BaseAbility {
         const kv = { duration: 3 };
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
-        //add armor buff
-        // this.caster.AddNewModifier(this.caster, this, malganis_necrotic_embrace_buff.name, kv); 
+        
 
         // this.caster.AddNewModifier(this.caster, this, modifier_.name, kv); 
 

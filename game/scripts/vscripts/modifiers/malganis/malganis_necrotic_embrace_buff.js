@@ -1,6 +1,6 @@
 import { BaseModifier, registerModifier } from "../../lib/dota_ts_adapter";
 @registerModifier()
-export class malganis_necrotic_embrace_buff extends BaseModifier {
+export class modifier_necrotic_embrace_buff extends BaseModifier {
     texture = "night_stalker_hunter_in_the_night";
     IsDebuff() {
         return false;
