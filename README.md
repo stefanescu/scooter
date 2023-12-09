@@ -6,8 +6,8 @@ HoTS heroes + DOTA2 items, map
 
 ## DISCLAIMER
 
-Hero concept, design, and abilities are based from Heroes of the Storm. All credits goes to them.
-This is a public implementation for educational programming purposes. Please use it responsibly.
+`Hero concept, design, and abilities are based from Heroes of the Storm. All credits goes to them.
+This is a public implementation for educational programming purposes. Please use it responsibly.`
 
 Made with love by fans of both HoTS and DOTA2.
 
