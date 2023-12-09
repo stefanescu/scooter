@@ -27,8 +27,8 @@
     "typescript-to-lua": "^1.20.0"
   },
   "_moduleAliases": {
-    "~resource": "game/resource",
-    "~generator": "node_modules/@shushishtok/tooltip_generator"
+    "~resource": "game/resource/",
+    "~generator": "@shushishtok/tooltip_generator"
   },
   "dependencies": {
     "@shushishtok/tooltip_generator": "^1.7.0"
