@@ -1,4 +1,29 @@
-# ModDota template
+
+# (Title WIP) Stormy Heroes in Dota 2  
+Repo for the development of Stormy Heroes in Dota 2 , a mod for Valve's DOTA 2.
+
+HoTS heroes + DOTA2 items, map
+
+## DISCLAIMER
+
+Hero concept, design, and abilities are based from Heroes of the Storm. All credits goes to them.
+This is a public implementation for educational programming purposes. Please use it responsibly.
+
+Made with love by fans of both HoTS and DOTA2.
+
+## Major changes to heroes:
+- Level up skills individually
+- Choose an Ultimate at level 6
+- Aghanim's upgrades
+
+## Heroes ported so far:
+- Mal'Ganis
+
+# Contributors 
+
+- [@SpiritPhalanx](https://github.com/SpiritPhalanx)
+
+<!-- # ModDota template
 
 A template for Dota 2 Custom Games built with modern technologies.
 
@@ -36,4 +61,4 @@ After that you can press `Ctrl+Shift+B` in VSCode or run `npm run dev` command i
 
 ## Continuous Integration
 
-This template includes a [GitHub Actions](https://github.com/features/actions) [workflow](.github/workflows/ci.yml) that builds your custom game on every commit and fails when there are type errors.
+This template includes a [GitHub Actions](https://github.com/features/actions) [workflow](.github/workflows/ci.yml) that builds your custom game on every commit and fails when there are type errors. -->
