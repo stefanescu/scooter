@@ -18,6 +18,8 @@ export class malganis_fel_claws extends BaseAbility {
     particle_hit_right = "particles/econ/items/ursa/ursa_swift_claw/ursa_swift_claw_right.vpcf";
 	particle_hit_right_fx?: ParticleID;
 
+    texture = "night_stalker_crippling_fear"
+
     cast_sound = "Hero_NightStalker.Void";
     
     cast_anim = [
@@ -36,16 +38,6 @@ export class malganis_fel_claws extends BaseAbility {
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_hit_left, context);
 		PrecacheResource(PrecacheType.PARTICLE, this.particle_hit_right, context);
 	}
-
-    OnAbilityPhaseStart() {
-        // this.caster.StartGestureWithPlaybackRate(GameActivity.DOTA_ATTACK, 2);
-        // this.caster.StartGestureWithPlaybackRate(GameActivity.DOTA_CAST_ABILITY_2, 2.5);
-        return true;
-    }
-
-    OnAbilityPhaseInterrupted() {
-        // this.caster.FadeGesture(GameActivity.DOTA_ATTACK);
-    }
 
     GetCastAnimation(): GameActivity {
         //determine ability phase from number of modifier stacks
@@ -82,8 +74,6 @@ export class malganis_fel_claws extends BaseAbility {
         if (this.IsThirdSlash()) return super.GetCooldown(level); // after max slashes, original cd
 
         return this.cd_between_slashes; // cd is this.cdBetweenSLashes until we reach max slashes
-        
-        // return super.GetCooldown(level); // after max slashes, original cd
     }
 
     GetManaCost(level: number): number {
@@ -96,6 +86,10 @@ export class malganis_fel_claws extends BaseAbility {
         return AbilityBehavior.AOE | AbilityBehavior.POINT
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
         | AbilityBehavior.ROOT_DISABLES;
+    }
+
+    GetAbilityTextureName(): string {
+        return this.texture;
     }
     
     OnSpellStart(): void {
@@ -110,7 +104,7 @@ export class malganis_fel_claws extends BaseAbility {
         
         // add dash modifier
         this.caster.AddNewModifier(this.caster, this, modifier_fel_claws_dash.name, {duration:0.3}); 
-        //find enemies in a circle,
+        //find enemies in a circle, 
         const enemies = FindUnitsInRadius(
             this.caster.GetTeamNumber(),
             this.caster.GetAbsOrigin(),

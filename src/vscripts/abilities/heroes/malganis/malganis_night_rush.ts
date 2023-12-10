@@ -10,6 +10,8 @@ export class malganis_night_rush extends BaseAbility {
     particle_darkness = "particles/units/heroes/hero_night_stalker/nightstalker_ulti.vpcf";
 	particle_darkness_fx?: ParticleID;
 
+    texture = "night_stalker_hunter_in_the_night";
+
     sleep_sound = "Hero_Riki.SleepDart.Damage";//todo: this just doesn't work??
     cast_sound = "night_stalker_nstalk_laugh_04"; //todo:
 
@@ -44,6 +46,10 @@ export class malganis_night_rush extends BaseAbility {
         return AbilityBehavior.NO_TARGET
         | AbilityBehavior.DONT_CANCEL_MOVEMENT
         | AbilityBehavior.ROOT_DISABLES;
+    }
+
+    GetAbilityTextureName(): string {
+        return this.texture;
     }
     
     OnSpellStart(): void {

@@ -55,7 +55,7 @@ export class modifier_fel_claws_dash extends BaseModifierMotionHorizontal {
 
 	DeclareFunctions(): ModifierFunction[] {
 		return [
-			ModifierFunction.TRANSLATE_ACTIVITY_MODIFIERS,
+			// ModifierFunction.TRANSLATE_ACTIVITY_MODIFIERS,
 			ModifierFunction.DISABLE_TURNING,
 			];
 	}
@@ -64,9 +64,9 @@ export class modifier_fel_claws_dash extends BaseModifierMotionHorizontal {
 		return 1;
 	}
 
-	GetActivityTranslationModifiers(): string {
-		return "hunter_night";
-	}
+	// GetActivityTranslationModifiers(): string {
+	// 	return "hunter_night";
+	// }
 
 	OnDestroy(): void {
 		if (!IsServer()) return;
