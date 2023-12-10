@@ -48,7 +48,7 @@ export class modifier_dark_conversion extends BaseModifier {
         if (!IsServer()) return;
 
         //get hp_difference from params
-        if (params.hp_diff)
+        // if (params.hp_diff)
             this.hp_difference_percent = params.hp_diff;
         
         let total_damage_or_heal = this.hp_difference_percent/100 * this.parent.GetMaxHealth();
