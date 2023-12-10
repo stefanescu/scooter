@@ -7,7 +7,7 @@ Early dev repo for Stormy Heroes in DOTA 2, a mod for Valve's DOTA 2.
 
 ## DISCLAIMER
 
-`Hero concept, design, and abilities are from Heroes of the Storm. All credits goes to them.
+`Hero names, concept, design, and abilities are from Heroes of the Storm. All credits goes to them.
 This is a public implementation for educational programming purposes. Please use it responsibly.`
 
 Using [ModDota Typescript Template](https://github.com/ModDota/TypeScriptAddonTemplate)
@@ -22,8 +22,15 @@ Made with love by fans of both HotS and DOTA2.
 - Choose an Ultimate at level 6
 - Aghanim's upgrades
 
-## Heroes ported so far:
-- Mal'Ganis
+## Phase 1 Planned Heroes:
+- Mal'Ganis 60% done
+- Garrosh 30%
+- Nazeebo
+- Gul'Dan
+- Tyrande
+- Malfurion
+- more
+
 
 # Contributors 
 
