@@ -1,4 +1,5 @@
 import { BaseAbility, registerAbility } from "../../../lib/dota_ts_adapter";
+import { modifier_dark_conversion } from "../../../modifiers/malganis/modifier_dark_conversion";
 import { modifier_malganis_model_changer_buff } from "../../../modifiers/malganis/modifier_malganis_model_changer_buff";
 
 @registerAbility()
@@ -12,7 +13,7 @@ export class malganis_dark_conversion extends BaseAbility {
     cast_sound = "night_stalker_nstalk_laugh_04"; //todo:
 
     cast_anim = GameActivity.FLY;//todo:
-    cast_point = 0.1;
+    cast_point = 0.3;
 
   
 
@@ -34,9 +35,7 @@ export class malganis_dark_conversion extends BaseAbility {
     }
     
     GetBehavior(): AbilityBehavior | Uint64 {
-        return AbilityBehavior.NO_TARGET 
-        | AbilityBehavior.IMMEDIATE 
-        | AbilityBehavior.DONT_CANCEL_MOVEMENT;
+        return AbilityBehavior.UNIT_TARGET;
     }
     
     OnSpellStart(): void {
@@ -53,10 +52,22 @@ export class malganis_dark_conversion extends BaseAbility {
         //change model
         this.caster.AddNewModifier(this.caster, this, modifier_malganis_model_changer_buff.name, kv); 
         
+        const target = this.GetCursorTarget();
+        if (!target) return;
 
-        // this.caster.AddNewModifier(this.caster, this, modifier_.name, kv); 
+        const target_hp = target.GetHealthPercent();
+        const caster_hp = this.caster.GetHealthPercent();
 
-        // this.caster.StartGestureWithFadeAndPlaybackRate(GameActivity.DOTA_CAST_ABILITY_2, 1, 1, 1);
+        const success = caster_hp < target_hp;
 
+        const hp_diff = math.abs(caster_hp - target_hp);
+        
+        const kv2 = { duration: 3, hp_diff:hp_diff };//todo dont forget
+        this.caster.AddNewModifier(this.caster, this, modifier_dark_conversion.name, kv2);
+
+        target.AddNewModifier(this.caster, this, modifier_dark_conversion.name, kv2);
+        
+        // if (success)
+        //play voiceline
     }
 }
