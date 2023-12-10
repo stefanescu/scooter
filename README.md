@@ -1,18 +1,24 @@
 
-# (Title WIP) Stormy Heroes in Dota 2  
-Repo for the development of Stormy Heroes in Dota 2 , a mod for Valve's DOTA 2.
+wip
+# (Title WIP) Stormy Heroes in DOTA 2  
+Early dev repo for Stormy Heroes in DOTA 2, a mod for Valve's DOTA 2.
 
-HoTS heroes + DOTA2 items, map
+### HotS heroes + DOTA2 items, map
 
 ## DISCLAIMER
 
-`Hero concept, design, and abilities are based from Heroes of the Storm. All credits goes to them.
+`Hero concept, design, and abilities are from Heroes of the Storm. All credits goes to them.
 This is a public implementation for educational programming purposes. Please use it responsibly.`
 
-Made with love by fans of both HoTS and DOTA2.
+Using [ModDota Typescript Template](https://github.com/ModDota/TypeScriptAddonTemplate)
 
-## Major changes to heroes:
-- Level up skills individually
+Heavily inspired from [@Shushishtok/dota-reimagined](https://github.com/Shushishtok/dota-reimagined)
+and more
+
+Made with love by fans of both HotS and DOTA2.
+
+## Hero changes:
+- Level up spells individually
 - Choose an Ultimate at level 6
 - Aghanim's upgrades
 
